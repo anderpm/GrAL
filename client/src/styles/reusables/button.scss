@@ -1,0 +1,59 @@
+
+@import '../colors';
+
+.extensionButton {
+    all: initial;
+    display: inline-block;
+    padding: 6px 9px;
+
+    border: 2px solid $primary-color;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    &.primary{
+        background-color: $primary-color;
+        color: $secondary-color;
+    }
+      
+    &.secondary{
+        background-color: $secondary-color;
+        color: $primary-color;
+        font-style: italic;
+    }
+
+    &.small{
+        padding: 4px 6px;
+        font-size: 13px;
+    }
+
+    &.spaced{
+        margin-left: 6px;
+    }
+
+    &.lineSpaced{
+        margin-top: 12px;
+    }
+
+    &.br{
+        margin-bottom: 6px;
+    }
+
+    &.delete{
+        border-color: $red-color;
+        color: $red-color;
+
+        &:hover{
+            background-color: rgb(255, 140, 140);
+            color: $secondary-color;
+            font-style: italic;
+        }
+    }
+
+    &:hover {
+        background-color: $intermediate-color;
+        color: $secondary-color;
+        font-style: italic;
+    }
+}
+
