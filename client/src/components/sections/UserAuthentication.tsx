@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../styles/sections/UserAuthentication.scss';
+import '../../styles/sections/userAuthentication.scss';
 
 import { useState, useEffect} from "react";
 import Button from "../reusables/Button";
@@ -19,13 +19,13 @@ import { getFromChromeStorage, removeFromChromeStorage, storeOnChromeStorage } f
 export default function UserAuthentication ({authenticationState, setAuthenticationState}:any): JSX.Element {
 
     const onLogoutHandler = () => {
-        removeFromChromeStorage("authenticationState", true);
+        //removeFromChromeStorage("authenticationState", true);
         setAuthenticationState("notLogged");
     }
 
     useEffect( ()=>{
-        getFromChromeStorage("authenticationState", true)
-        .then( value => value != null && setAuthenticationState(value) );
+        //getFromChromeStorage("authenticationState", true)
+        //.then( value => value != null && setAuthenticationState(value) );
     });
   
     return ( 
@@ -93,7 +93,7 @@ function LoginForm({setAuthState}:any): JSX.Element {
         const loginResult:any = await fetchServer(bodyData, "userAuthentication");
 
         if(loginResult.success){
-            storeOnChromeStorage("authenticationState", loginResult.username, true);
+            //storeOnChromeStorage("authenticationState", loginResult.username, true);
             setAuthState(loginResult.username);
         } else {
             window.alert(loginResult.error);

@@ -1,0 +1,59 @@
+
+@import '../../colors';
+
+#resultSection{
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0 20px;
+  border-bottom: 2px solid $gray-borders;
+
+  & .header{
+    padding-top: 12px;
+    text-align: center;
+  }
+
+  & .body {
+    margin: 12px 0;
+    padding: 12px 0;
+    border-top: 1px solid $gray-borders;
+    text-align: center;
+  }
+}
+
+#conformanceLevelSelector{
+  align-items: center;
+  text-align: center;
+
+  & .level-container {
+    margin-bottom: 15px;
+    border: 2px solid $primary-color;
+    background-color: $primary-color;
+    border-radius: 6px;
+    overflow: hidden;
+    display: inline-block;
+
+    & .conformanceLevels {
+      display: inline-flex;
+      padding: 6px 9px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      background-color: $secondary-color;
+      color: $primary-color;
+      font-style: italic;
+
+      &.selected{
+        background-color: $primary-color;
+        color: $secondary-color;
+        font-style: normal;
+      }
+
+      &:hover{
+        background-color: $intermediate-color;
+        color: $secondary-color;
+        font-style: italic;
+      }
+
+    }
+  }
+}

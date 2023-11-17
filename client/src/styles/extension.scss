@@ -1,0 +1,122 @@
+
+@import "colors";
+
+body.extension-active {
+  position: relative;
+  left: 300px;
+}
+
+#hidden_extension_logo{
+  all: initial;
+  position: fixed;
+  top: calc(50vh - 25px);
+  left: -25px;
+  height: 50px;
+  border-radius: 50px;
+  border: 2px solid $intermediate-color;
+  overflow: hidden;
+  cursor: pointer;
+  filter: drop-shadow(0 0 0) brightness(0.6);
+  transition: 0.2s ease;
+  z-index:99999;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+
+  &:hover {
+    filter: drop-shadow(0 0 2px $primary-color) brightness(1);
+    transition: 0.2s ease;
+  }
+}
+
+#react_chrome_extension{
+
+  & *{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  & ul {
+    all: initial;
+    list-style-type: none;
+  }
+
+  all: initial;
+  padding: 20px 0 0 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed; 
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: $secondary-color;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  animation: slide-in 0.3s forwards;
+  z-index:99998;
+
+  &.hidden {
+    animation: slide-out 0.3s forwards;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+  }
+
+  & .icon{
+    all:initial;
+    position: absolute;
+    background-color: transparent;
+    cursor: pointer;
+
+    &.options{
+      height: 15px;
+      top: 20px;
+      left: 20px;
+    }
+
+    &.close{
+      font-size: 25px;
+      font-weight: 700;
+      color: black;
+      top: 10px;
+      left: 270px;
+    }
+  }
+
+  & .img_container{
+    all: initial;
+    display: block;
+    align-self: center;
+    text-align: center;
+    height: 104px;
+
+    & img{
+      all: initial;
+      height: 100px;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #005a6aaa;
+    border-radius: 50px;
+  }
+  
+}
+
+@keyframes slide-in {
+  from { left: -295px; }
+  to { left: 0px; }
+}
+
+@keyframes slide-out {
+  from { left: 0px; }
+  to { left: -295px; }
+}
+

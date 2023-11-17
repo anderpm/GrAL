@@ -1,0 +1,106 @@
+
+
+@import '../colors';
+
+#reportLoadingWrapper{
+
+    padding: 30px;
+    margin: 0;
+
+    & button{
+        margin: 12px 0;
+        border: 2px solid $primary-color;
+        background-color: $secondary-color;
+        color: $primary-color;
+        padding: 3px 6px;
+        cursor: pointer;
+
+        &:hover{
+            background-color: $intermediate-color;
+            color: $secondary-color;
+        }
+    }
+
+    & .tableWrapper{
+        
+        padding: 0;
+        margin: 0;
+        border: 2px solid $primary-color;
+        border-radius: 6px;
+        background-color: $primary-color;
+        overflow-y: auto;
+        max-height: 50vh;
+    
+        & table{
+
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 250px;
+            text-align: center;
+            background-color: $secondary-color;
+        
+            & tr{
+
+                padding: 0;
+                margin: 0;
+                &:hover{
+                    background-color: $intermediate-color;
+                    color: $secondary-color;
+                }
+
+                cursor: default;
+                border-bottom: 1px solid $primary-color;
+
+                &:last-of-type{
+                    border-bottom: none;
+                }
+
+                &.selected{
+                    background-color: $intermediate-color;
+                    color: $secondary-color;
+                }
+            
+                & th{
+                    margin: 0;
+                    padding: 6px 0;
+                    font-size: 13px;
+                    text-align: center;
+                    font-weight: 300;
+                    position: sticky;
+                    top: 0px;
+                    border-right: 1px solid $gray-borders;
+                    background-color: $primary-color;
+                    color: $secondary-color;
+                
+                    &:last-of-type{
+                        border-right: none;
+                    }
+                }
+        
+                & td{
+                    padding: 6px 0;
+                    font-size: 12px;
+                    border-right: 1px solid $gray-borders;
+                    margin: 0;
+                    &:last-of-type{
+                        border-right: none;
+                    }
+                }
+
+
+            }
+        }
+        
+        &::-webkit-scrollbar {
+            width: 3px;
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #005a6aaa;
+            border-radius: 50px;
+        }
+    }
+}
