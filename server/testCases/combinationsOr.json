@@ -1,0 +1,512 @@
+{
+  "totalCombinations": 63,
+  "combinations": [
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 674
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 669
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 653
+    },
+    {
+      "combination": [
+        "a11y",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 640
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "mv",
+        "am"
+      ],
+      "passedTests": 628
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "am",
+        "lh"
+      ],
+      "passedTests": 614
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "mv",
+        "am"
+      ],
+      "passedTests": 612
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 612
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "am",
+        "lh"
+      ],
+      "passedTests": 609
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "mv",
+        "am"
+      ],
+      "passedTests": 607
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "am",
+        "lh"
+      ],
+      "passedTests": 593
+    },
+    {
+      "combination": [
+        "pa",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 592
+    },
+    {
+      "combination": [
+        "ac",
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 591
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 585
+    },
+    {
+      "combination": [
+        "a11y",
+        "am",
+        "lh"
+      ],
+      "passedTests": 580
+    },
+    {
+      "combination": [
+        "a11y",
+        "mv",
+        "am"
+      ],
+      "passedTests": 578
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 578
+    },
+    {
+      "combination": [
+        "mv",
+        "am",
+        "lh"
+      ],
+      "passedTests": 561
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 553
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "am"
+      ],
+      "passedTests": 543
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "am",
+        "lh"
+      ],
+      "passedTests": 543
+    },
+    {
+      "combination": [
+        "a11y",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 535
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "am"
+      ],
+      "passedTests": 527
+    },
+    {
+      "combination": [
+        "pa",
+        "am",
+        "lh"
+      ],
+      "passedTests": 523
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "am"
+      ],
+      "passedTests": 522
+    },
+    {
+      "combination": [
+        "ac",
+        "am",
+        "lh"
+      ],
+      "passedTests": 522
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 514
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "mv"
+      ],
+      "passedTests": 506
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "mv",
+        "am"
+      ],
+      "passedTests": 495
+    },
+    {
+      "combination": [
+        "a11y",
+        "am"
+      ],
+      "passedTests": 493
+    },
+    {
+      "combination": [
+        "am",
+        "lh"
+      ],
+      "passedTests": 492
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "mv"
+      ],
+      "passedTests": 488
+    },
+    {
+      "combination": [
+        "pa",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 483
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa",
+        "lh"
+      ],
+      "passedTests": 483
+    },
+    {
+      "combination": [
+        "ac",
+        "mv",
+        "lh"
+      ],
+      "passedTests": 481
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa",
+        "lh"
+      ],
+      "passedTests": 476
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "mv"
+      ],
+      "passedTests": 473
+    },
+    {
+      "combination": [
+        "ac",
+        "mv",
+        "am"
+      ],
+      "passedTests": 472
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "lh"
+      ],
+      "passedTests": 451
+    },
+    {
+      "combination": [
+        "a11y",
+        "mv"
+      ],
+      "passedTests": 437
+    },
+    {
+      "combination": [
+        "a11y",
+        "lh"
+      ],
+      "passedTests": 433
+    },
+    {
+      "combination": [
+        "mv",
+        "lh"
+      ],
+      "passedTests": 427
+    },
+    {
+      "combination": [
+        "pa",
+        "mv",
+        "am"
+      ],
+      "passedTests": 420
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "lh"
+      ],
+      "passedTests": 396
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "am"
+      ],
+      "passedTests": 386
+    },
+    {
+      "combination": [
+        "mv",
+        "am"
+      ],
+      "passedTests": 377
+    },
+    {
+      "combination": [
+        "pa",
+        "lh"
+      ],
+      "passedTests": 365
+    },
+    {
+      "combination": [
+        "ac",
+        "am"
+      ],
+      "passedTests": 363
+    },
+    {
+      "combination": [
+        "ac",
+        "lh"
+      ],
+      "passedTests": 363
+    },
+    {
+      "combination": [
+        "ac",
+        "pa",
+        "mv"
+      ],
+      "passedTests": 355
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y",
+        "pa"
+      ],
+      "passedTests": 350
+    },
+    {
+      "combination": [
+        "a11y",
+        "pa"
+      ],
+      "passedTests": 332
+    },
+    {
+      "combination": [
+        "ac",
+        "a11y"
+      ],
+      "passedTests": 317
+    },
+    {
+      "combination": [
+        "ac",
+        "mv"
+      ],
+      "passedTests": 316
+    },
+    {
+      "combination": [
+        "pa",
+        "am"
+      ],
+      "passedTests": 311
+    },
+    {
+      "combination": [
+        "lh"
+      ],
+      "passedTests": 309
+    },
+    {
+      "combination": [
+        "a11y"
+      ],
+      "passedTests": 281
+    },
+    {
+      "combination": [
+        "am"
+      ],
+      "passedTests": 268
+    },
+    {
+      "combination": [
+        "pa",
+        "mv"
+      ],
+      "passedTests": 266
+    },
+    {
+      "combination": [
+        "mv"
+      ],
+      "passedTests": 188
+    },
+    {
+      "combination": [
+        "ac",
+        "pa"
+      ],
+      "passedTests": 167
+    },
+    {
+      "combination": [
+        "ac"
+      ],
+      "passedTests": 128
+    },
+    {
+      "combination": [
+        "pa"
+      ],
+      "passedTests": 78
+    }
+  ]
+}
