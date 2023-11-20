@@ -7,6 +7,9 @@ import Button from '../reusables/Button';
 import Dropdown from '../reusables/DropdownSection';
 
 import { getImgSrc } from '../../scripts/utils/chromeUtils.js';
+import edit from '../../images/edit.png';
+import deleteI from '../../images/delete.png';
+
 
 
 const defaultScope = [{name: window.document.title, url: window.location.href}];
@@ -131,7 +134,7 @@ export default function ScopeDefinition (): JSX.Element {
                 <img 
                   className="icon edit" 
                   alt="edit web page data" 
-                  src={getImgSrc("edit")} 
+                  src={edit} 
                   onClick={() => handleEditItem(index)} 
                 />
                 {(scope.length > 1 || 
@@ -140,7 +143,7 @@ export default function ScopeDefinition (): JSX.Element {
                   <img 
                     className="icon delete" 
                     alt="remove web page from list" 
-                    src={getImgSrc("delete")} 
+                    src={deleteI} 
                     onClick={() => handleDeleteItem(index)} 
                   />
                 )}

@@ -24,10 +24,12 @@ export default function ReportResults(): JSX.Element {
       setConformanceLevels(JSON.parse(storedConformanceLevels));
     }
 
+    /**
     getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false)
     .then((value)=>{
       setReportIsLoaded(value);
     });
+    */
   }, []);
 
   useEffect(() => {

@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import Button from '../reusables/Button';
 
 import { getFromChromeStorage, getImgSrc } from '../../scripts/utils/chromeUtils.js';
+import extendedArrow from '../../images/extendedArrow.png';
+import contractedArrow from '../../images/contractedArrow.png';
+
 import { removeLoadedReport, downloadLoadedReport, uploadNewReport, evaluateScope, testEvaluators } from '../../scripts/reportLoadingOptions.js';
 import { storeNewReport } from '../../scripts/reportStorageOptions.js';
 
@@ -22,12 +25,14 @@ export default function EvaluationOptions ({authenticationState, setLoadingRepor
   const [isOpen, setIsOpen] = useState(false);
   const [reportIsLoaded, setReportIsLoaded] = useState("false");
 
+  /**
   useEffect(()=>{
     getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false)
     .then((value)=>{
       setReportIsLoaded(value);
     });
   });
+  */
 
   
   
@@ -46,7 +51,7 @@ export default function EvaluationOptions ({authenticationState, setLoadingRepor
         <div className={"dropdownHead" + (isOpen ? " active" : "")} onClick={()=>setIsOpen(!isOpen)}>
           <label>Current report options</label>
           <img 
-            src={ isOpen ? getImgSrc("extendedArrow") : getImgSrc("contractedArrow") } 
+            src={ isOpen ? extendedArrow : contractedArrow } 
             alt="dropdown_arrow" 
           />
         </div>

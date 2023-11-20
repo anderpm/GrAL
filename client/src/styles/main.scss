@@ -1,0 +1,48 @@
+    @import "colors";
+
+#hidden_extension_logo{
+    height: 60px;
+}
+
+#react_chrome_extension{
+    & .icon {
+        all:initial;
+        position: absolute;
+        background-color: transparent;
+        cursor: pointer;
+
+        &.options{
+            height: 15px;
+            top: 20px;
+            right: 200px;        
+        }
+    }
+
+    & .img_container{
+        all: initial;
+        display: block;
+        align-self: center;
+        text-align: center;
+        height: 104px;
+    
+        & img{
+          all: initial;
+          height: 100px;
+          border-radius: 18px;
+          overflow: hidden;
+          cursor: pointer;
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #005a6aaa;
+        border-radius: 50px;
+    }
+
+}

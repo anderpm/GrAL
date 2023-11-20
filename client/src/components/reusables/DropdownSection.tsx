@@ -5,6 +5,8 @@ import '../../styles/reusables/dropdownSection.scss';
 import { useState } from 'react';
 
 import { getImgSrc } from '../../scripts/utils/chromeUtils';
+import extendedArrow from '../../images/extendedArrow.png';
+import contractedArrow from '../../images/contractedArrow.png';
 
 
 /**
@@ -22,7 +24,7 @@ export default function Dropdown({ headerText, children, classList }:any) : JSX.
     return(
         <div className={"extensionDropdown " + classList}>
             <div className="header" onClick={() => setIsOpen((prev:any) => !prev) }>
-                <img src = { isOpen ? getImgSrc("extendedArrow") : getImgSrc("contractedArrow") } alt="dropdown_arrow" />
+                <img src = { isOpen ? extendedArrow : contractedArrow } alt="dropdown_arrow" />
                 <span>{headerText}</span>
             </div>
 
