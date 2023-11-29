@@ -26,11 +26,23 @@ export function openOptionsPage(){
  * @returns {Promise<any>} A promise that resolves with the retrieved value.
  */
 export function getFromChromeStorage(key, isSync = true) {
+    /**
     return new Promise((resolve) => {
         chrome.storage[isSync ? 'sync' : 'local'].get(key, (result) => {
             resolve(result[key]);
         });
     });
+    */
+    return new Promise((resolve) => {
+        try {
+            const serializedValue = localStorage.getItem(key);
+            console.log(key + " " + serializedValue);
+            resolve(serializedValue);
+        } catch (error) {
+            console.error(`Error getting value from localStorage: ${error.message}`);
+            return null;
+        }
+    })
 }
 
 /**
@@ -40,9 +52,23 @@ export function getFromChromeStorage(key, isSync = true) {
  * @param {boolean} [sync=false] - Indicates whether to use the sync storage or local storage. Default is local storage.
  */
 export function storeOnChromeStorage(key, value, sync = false){
+    /**
     let obj = {};
     obj[key] = value;
     chrome.storage[sync ? "sync" : "local"].set(obj);
+    */
+    /**
+    const obj = {};
+    obj[key] = value;
+    localStorage.setItem(key, JSON.stringify(obj));
+    */
+    try {
+        const serializedValue = JSON.stringify(value);
+        localStorage.setItem(key, serializedValue);
+        console.log(`Value set successfully for key: ${key}`);
+    } catch (error) {
+        console.error(`Error setting value to localStorage: ${error.message}`);
+    }
 }
 
 /**
@@ -51,7 +77,10 @@ export function storeOnChromeStorage(key, value, sync = false){
  * @param {boolean} [sync=false] - Indicates whether to remove the value from sync storage or local storage. Default is local storage.
  */
 export function removeFromChromeStorage(key, sync = false) {
+    /**
     chrome.storage[sync ? "sync" : "local"].remove(key);
+    */
+    localStorage.removeItem(key);
 }
 
 /**

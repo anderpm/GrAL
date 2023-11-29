@@ -32,6 +32,13 @@ export default function ReportResults(): JSX.Element {
     */
   }, []);
 
+  useEffect(()=>{
+    getFromChromeStorage(window.location.hostname + ".reportIsLoaded").then(result => {
+      setReportIsLoaded(JSON.parse(result));
+    })
+  }, []);
+
+
   useEffect(() => {
     localStorage.setItem("conformanceLevels", JSON.stringify(conformanceLevels));
   }, [conformanceLevels]);

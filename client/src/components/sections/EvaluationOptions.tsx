@@ -25,14 +25,20 @@ export default function EvaluationOptions ({authenticationState, setLoadingRepor
   const [isOpen, setIsOpen] = useState(false);
   const [reportIsLoaded, setReportIsLoaded] = useState("false");
 
-  /**
   useEffect(()=>{
+    /**
     getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false)
     .then((value)=>{
       setReportIsLoaded(value);
     });
-  });
-  */
+    */
+
+    getFromChromeStorage(window.location.hostname + ".reportIsLoaded").then((result) => {
+      setReportIsLoaded(JSON.parse(result));
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+  }, []);
 
   
   
