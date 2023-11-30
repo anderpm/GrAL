@@ -13,6 +13,12 @@ import { mapReportData } from '../../../scripts/mapReportData';
 import { getSuccessCriterias } from '../../../scripts/utils/wcagUtils';
 import { loadReport } from '../../../scripts/reportLoadingOptions';
 
+import extendedArrow from '../../../images/extendedArrow.png';
+import contractedArrow from '../../../images/contractedArrow.png';
+import edit from '../../../images/edit.png';
+import remove from '../../../images/remove.png';
+import blacklist from '../../../images/blacklist.png';
+
 
 const outcome2Background:any = {
     "earl:passed": {backgroundColor: "#C8FA8C"},
@@ -42,6 +48,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
     const [mantainExtended, setMantainExtended] = useState(false);
     const [reportTableContent, setReportTableContent] = useState([]);
     const [selectedMainCategories, setSelectedMainCategories] = useState(Array(reportTableContent.length).fill(false));
+    const [pageSummaries, setPageSummaries] = useState(null);
 
     /**
      * useEffect hook to handle component initialization and state updates.
@@ -61,13 +68,16 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
         });
         getFromChromeStorage(window.location.hostname + ".reportTableContent", false)
         .then( value => {
-            if(value != null) setReportTableContent(value)  
+            if(value != null) setReportTableContent(JSON.parse(value))
         });
         
         const storedValue = sessionStorage.getItem("selectedMainCategories");
         if(storedValue){
             setSelectedMainCategories(JSON.parse(storedValue));
         }
+
+        getFromChromeStorage(window.location.hostname + ".pageSummaries", false)
+        .then( value => value != null && setPageSummaries(JSON.parse(value)) );
     }, []);
 
     /**
@@ -107,6 +117,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
                                 <ResultCount 
                                     category={mainCategory} 
                                     conformanceLevels={conformanceLevels}
+                                    pageSummaries = {pageSummaries}
                                 />
                             </tr>
                             { selectedMainCategories[index] && ( 
@@ -114,6 +125,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
                                     subCategories={mainCategory.subCategories} 
                                     mantainExtended={mantainExtended} 
                                     conformanceLevels={conformanceLevels} 
+                                    pageSummaries={pageSummaries}
                                 /> 
                             )}
                         </>))}
@@ -134,7 +146,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
  * @param {any} props.conformanceLevels - The conformance levels.
  * @returns {JSX.Element} The JSX element representing the subcategory component.
  */
-function SubCategory({subCategories, mantainExtended, conformanceLevels}:any){
+function SubCategory({subCategories, mantainExtended, conformanceLevels, pageSummaries}:any){
 
     const [selectedSubCategories, setSelectedSubCategories] = useState(Array(subCategories.length).fill(false));
 
@@ -170,7 +182,7 @@ function SubCategory({subCategories, mantainExtended, conformanceLevels}:any){
                 )}
             >
                 <td>{subCategory.subCategoryTitle}</td>
-                <ResultCount category={subCategory} conformanceLevels={conformanceLevels} />
+                <ResultCount category={subCategory} conformanceLevels={conformanceLevels} pageSummaries={pageSummaries} />
             </tr>
             { selectedSubCategories[index] && ( 
                 <Criterias 
@@ -212,7 +224,7 @@ function Criterias({criterias, mantainExtended, conformanceLevels}:any){
         {criterias.map((criteria:any, index:any) => (<>
 
             { conformanceLevels.includes(criteria.conformanceLevel) && (<>
-            
+                {console.log("----------")}
                 <tr 
                     className={"collapsible criteria"} 
                     style={{...outcome2Background[criteria.outcomes[window.location.href]]}} 
@@ -226,8 +238,16 @@ function Criterias({criterias, mantainExtended, conformanceLevels}:any){
                 >
                     <td colSpan={2}>
                         {criteria.hasOwnProperty("hasPart") ? <>
-                            
-                            <img 
+                            {selectedCriterias[index] ?
+                                <img className='arrow'
+                                src={extendedArrow}
+                                alt="Show information" height="20px"/>
+                            :
+                                <img className='arrow'
+                                src={contractedArrow}
+                                alt="Show information" height="20px"/>
+                            }
+                            {/* <img 
                                 className='arrow'
                                 src={ selectedCriterias[index] ? 
                                         getImgSrc("extendedArrow") 
@@ -235,7 +255,7 @@ function Criterias({criterias, mantainExtended, conformanceLevels}:any){
                                         getImgSrc("contractedArrow") 
                                     } 
                                 alt="Show information" height="20px"
-                            />
+                            /> */}
                             {criteria.criteria}
                             
                         </> : <> {criteria.criteria} </> }
@@ -518,7 +538,19 @@ function CriteriaResults({criteria}:any){
                 >
                     <td colSpan={6} style={{...outcome2Background["earl:" + result.outcome]}}>
 
-                        <img 
+                        {selectedCriteriaResults[index] ?
+                                <img className='arrow'
+                                src={extendedArrow}
+                                alt="Show information" 
+                                height="20px"/>
+                            :
+                                <img className='arrow'
+                                src={contractedArrow}
+                                alt="Show information" 
+                                height="20px"/>
+                        }
+
+                        {/* <img 
                             className='arrow'
                             src={ selectedCriteriaResults[index] ? 
                                     getImgSrc("extendedArrow") 
@@ -527,7 +559,7 @@ function CriteriaResults({criteria}:any){
                                 } 
                             alt="Show information" 
                             height="20px"
-                        />
+                        /> */}
 
                         {result.outcome}
 
@@ -545,7 +577,7 @@ function CriteriaResults({criteria}:any){
                         </> : <>
                             <img 
                                 className='editIcon'
-                                src={ getImgSrc("edit") } 
+                                src={edit} 
                                 alt="Edit found case" 
                                 title="Edit found case" 
                                 height="16px" 
@@ -556,7 +588,8 @@ function CriteriaResults({criteria}:any){
                             />
                             <img 
                                 className='removeIcon'
-                                src={ getImgSrc("remove") } 
+                                src={remove
+                                } 
                                 alt="Remove found case"
                                 title="Remove found case"
                                 height="16px" 
@@ -584,7 +617,7 @@ function CriteriaResults({criteria}:any){
 
                                     <img 
                                         className='blacklistIcon' 
-                                        src={ getImgSrc("blacklist") } 
+                                        src={blacklist} 
                                         alt="Add message to blacklist" 
                                         title="Add message to blacklist"
                                         height="16px" 
@@ -598,7 +631,7 @@ function CriteriaResults({criteria}:any){
                                     
                                     <img 
                                         className='removeIcon' 
-                                        src={ getImgSrc("remove") } 
+                                        src={remove} 
                                         alt="Remove message" 
                                         title="Remove message"
                                         height="16px"
@@ -770,7 +803,7 @@ function CriteriaResultPointers({resultGroupedPointers, edit, removedPointers, s
                         {edit && (
                             <img 
                                 className='removePointerIcon' 
-                                src={ getImgSrc("remove") } 
+                                src={remove} 
                                 alt="Remove pointer from list" 
                                 title="Remove pointer" 
                                 height="16px" 
@@ -809,12 +842,10 @@ export function OutcomeHeaders(){
  * @param {object} category - The category object.
  * @param {array} conformanceLevels - The conformance levels.
  */
-function ResultCount({category, conformanceLevels}:any){
-
+function ResultCount({category, conformanceLevels, pageSummaries}:any){
     let passed = 0, failed = 0, cantTell = 0, inapplicable = 0, untested = 0;
 
-    const outcomes = category.webPageOutcomes[window.location.href];
-
+    const outcomes = category.webPageOutcomes[Object.keys(pageSummaries)[0]];
     if(outcomes){
         for(const conformanceLevel of conformanceLevels){
             passed += outcomes["earl:passed"][conformanceLevel];
@@ -824,7 +855,6 @@ function ResultCount({category, conformanceLevels}:any){
             untested += outcomes["earl:untested"][conformanceLevel];
         }
     }
-
     return(<> <td>{passed}</td><td>{failed}</td><td>{cantTell}</td><td>{inapplicable}</td><td>{untested}</td> </>);
 }
 
