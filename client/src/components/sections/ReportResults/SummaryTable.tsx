@@ -44,9 +44,9 @@ export default function SummaryTable({conformanceLevels}:any){
 
     useEffect(() => { 
         getFromChromeStorage(window.location.hostname + ".siteSummary", false)
-        .then( value => value != null && setSiteSummary(value) );
+        .then( value => value != null && setSiteSummary(JSON.parse(value)) );
         getFromChromeStorage(window.location.hostname + ".pageSummaries", false)
-        .then( value => value != null && setPageSummaries(value) );
+        .then( value => value != null && setPageSummaries(JSON.parse(value)) );
     },[]);
 
     useEffect(() => { 
