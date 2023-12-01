@@ -189,6 +189,7 @@ function SubCategory({subCategories, mantainExtended, conformanceLevels, pageSum
                     criterias={subCategory.criterias} 
                     mantainExtended={mantainExtended} 
                     conformanceLevels={conformanceLevels}
+                    pageSummaries={pageSummaries}
                 /> 
             )}
         
@@ -205,7 +206,7 @@ function SubCategory({subCategories, mantainExtended, conformanceLevels, pageSum
  * @param {any} props.conformanceLevels - The conformance levels.
  * @returns {JSX.Element} The JSX element representing the criterias component.
  */
-function Criterias({criterias, mantainExtended, conformanceLevels}:any){
+function Criterias({criterias, mantainExtended, conformanceLevels, pageSummaries}:any){
 
     const [selectedCriterias, setSelectedCriterias] = useState(Array(criterias.length).fill(false));
 
@@ -224,10 +225,9 @@ function Criterias({criterias, mantainExtended, conformanceLevels}:any){
         {criterias.map((criteria:any, index:any) => (<>
 
             { conformanceLevels.includes(criteria.conformanceLevel) && (<>
-                {console.log("----------")}
                 <tr 
                     className={"collapsible criteria"} 
-                    style={{...outcome2Background[criteria.outcomes[window.location.href]]}} 
+                    style={{...outcome2Background[criteria.outcomes[Object.keys(pageSummaries)[0]]]}} 
                     onClick={() => collapsibleClickHandler(
                         selectedCriterias, 
                         setSelectedCriterias, 
@@ -260,7 +260,7 @@ function Criterias({criterias, mantainExtended, conformanceLevels}:any){
                             
                         </> : <> {criteria.criteria} </> }
                     </td>
-                    <td colSpan={4}>{criteria.outcomes[window.location.href]}</td>
+                    <td colSpan={4}>{criteria.outcomes[Object.keys(pageSummaries)[0]]}</td>
                 </tr>
                 {criteria.hasOwnProperty("hasPart") && selectedCriterias[index] && ( 
                     <CriteriaResults criteria={criteria} />
@@ -296,7 +296,6 @@ function CriteriaResults({criteria}:any){
      */
     async function getFoundCaseFromReport(index:any){
         
-
         const evaluationReport = await getFromChromeStorage(window.location.hostname, false);
 
         const criteriaTxt = wcagCriterias.find((elem:any) => elem.num === criteria.criteriaNumber);
@@ -529,7 +528,7 @@ function CriteriaResults({criteria}:any){
     return(<>
         {criteria.hasPart.map((result:any, index:any) => (<>
 
-            {result.webPage === window.location.href && (<>
+            {result.webPage === "https://www.ehu.eus/es/home" && (<>
                 <tr 
                     className="collapsible criteriaResult" 
                     onClick={
