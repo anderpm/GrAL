@@ -95,11 +95,11 @@ export default function EvaluationOptions ({authenticationState, setLoadingRepor
         </div>
       </> )}
 
-      {<Button 
+      {/* {<Button 
         classList={"primary lineSpaced"} 
         onClickHandler={()=>{testEvaluators()}}
         innerText={"Test evaluators"}
-      />}
+      />} */}
       
     </div>
   );
