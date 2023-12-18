@@ -9,7 +9,7 @@ import { mapReportData } from '../mapReportData.js';
  * @returns {string} The image source URL.
  */
 export function getImgSrc(name){
-    return chrome.runtime.getURL('/images/' + name + '.png');
+    //return chrome.runtime.getURL('/images/' + name + '.png');
 }
 
 /**
