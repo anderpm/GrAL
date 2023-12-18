@@ -42,9 +42,11 @@ export async function loadStoredReport(id){
         const storeResults = await fetchServer(bodyData, "reportStoring");
 
         if(storeResults.success){
-            const reportLoaded = await getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false);
+            const getReportLoaded = await getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false);
+            const reportLoaded = JSON.parse(getReportLoaded);
             if(reportLoaded === "true"){
-                const currentReport = await getFromChromeStorage(window.location.hostname, false);
+                const getCurrentReport = await getFromChromeStorage(window.location.hostname, false);
+                const currentReport = JSON.parse(getCurrentReport);
                 includeEditedFoundCases(storeResults.report, currentReport);
             }
             loadReport(storeResults.report);
@@ -145,7 +147,9 @@ export async function storeNewReport(setAnimateBtn, authenticationState){
     try{
         setAnimateBtn("store");
 
-        const report = await getFromChromeStorage(window.location.hostname, false);
+        const getReport = await getFromChromeStorage(window.location.hostname, false);
+
+        const report = JSON.parse(getReport);
 
         const enableBlacklist = await getFromChromeStorage('enableBlacklist');
         
