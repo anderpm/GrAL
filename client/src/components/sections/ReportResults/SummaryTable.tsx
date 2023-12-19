@@ -59,11 +59,11 @@ export default function SummaryTable({conformanceLevels}:any){
 
             scope = JSON.parse(scope);
 
-            const currentWebpage:any = scope.find((elem:any) => elem.url === window.location.href)
+            const currentWebpage:any = scope.find((elem:any) => elem.url === Object.keys(pageSummaries)[0])
 
             setWebpage(currentWebpage ? currentWebpage.name : null)
 
-            const webPageSummary = pageSummaries[window.location.href];
+            const webPageSummary = pageSummaries[Object.keys(pageSummaries)[0]];
             
             if(webPageSummary){
                 countOutcomes(webPageSummary, setWebPageOutcomes);
@@ -89,7 +89,7 @@ export default function SummaryTable({conformanceLevels}:any){
                     onClick={() => setActiveTab('webpage')}
                     style={{width: "136px"}}
                 >
-                    {pageSummaries && pageSummaries[window.location.href] && webpage ? 
+                    {pageSummaries && pageSummaries[Object.keys(pageSummaries)[0]] && webpage ? 
                         webpage
                     : "Current webpage"}
                 </div>
@@ -103,7 +103,7 @@ export default function SummaryTable({conformanceLevels}:any){
             </>)}
 
             {activeTab === 'webpage' && (<>
-                {pageSummaries && pageSummaries[window.location.href] ? (
+                {pageSummaries && pageSummaries[Object.keys(pageSummaries)[0]] ? (
                     <table id="summaryTable">
                         <tr> <OutcomeHeaders /> </tr>
                         <tr> {webPageOutcomes.map((count:any) => ( <td>{count}</td> ))} </tr>
