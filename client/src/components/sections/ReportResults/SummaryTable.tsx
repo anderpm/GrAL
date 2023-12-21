@@ -95,25 +95,27 @@ export default function SummaryTable({conformanceLevels}:any){
                 </div>
             </div>
 
-            {activeTab === 'website' && (<>
-                <table id="summaryTable">
-                    <tr> <OutcomeHeaders /> </tr>
-                    <tr> {webSiteOutcomes.map((count:any) => ( <td>{count}</td> ))} </tr>
-                </table>
-            </>)}
-
-            {activeTab === 'webpage' && (<>
-                {pageSummaries && pageSummaries[Object.keys(pageSummaries)[0]] ? (
+            <div className="table">
+                {activeTab === 'website' && (<>
                     <table id="summaryTable">
                         <tr> <OutcomeHeaders /> </tr>
-                        <tr> {webPageOutcomes.map((count:any) => ( <td>{count}</td> ))} </tr>
+                        <tr> {webSiteOutcomes.map((count:any) => ( <td>{count}</td> ))} </tr>
                     </table>
-                ) : (
-                    <div style={{ textAlign: 'center', padding: '15px 0' }}>
-                        Current webpage has not been evaluated
-                    </div>
-                )}
-            </>)}
+                </>)}
+
+                {activeTab === 'webpage' && (<>
+                    {pageSummaries && pageSummaries[Object.keys(pageSummaries)[0]] ? (
+                        <table id="summaryTable">
+                            <tr> <OutcomeHeaders /> </tr>
+                            <tr> {webPageOutcomes.map((count:any) => ( <td>{count}</td> ))} </tr>
+                        </table>
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '15px 0' }}>
+                            Current webpage has not been evaluated
+                        </div>
+                    )}
+                </>)}
+            </div>
 
         </div>
     );
