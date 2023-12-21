@@ -711,7 +711,7 @@ function CriteriaResultPointers({resultGroupedPointers, edit, removedPointers, s
                         newHiddenElements[groupKey].push(i);
 
                     }else if(!pointer.html.startsWith("<body")){
-                        highlightElement(pointedElement, groupKey, i);
+                        // highlightElement(pointedElement, groupKey, i);
                     }
                 }else{
                     if (!newIgnoredElements[groupKey]) {
@@ -732,7 +732,7 @@ function CriteriaResultPointers({resultGroupedPointers, edit, removedPointers, s
      */
     function handlePointerClick(groupKey:string, index:number){
 
-        unselectHighlightedElement(); // If previously selected
+        // unselectHighlightedElement(); // If previously selected
 
         if (selectedPointer[groupKey] === index) {
 
@@ -748,7 +748,7 @@ function CriteriaResultPointers({resultGroupedPointers, edit, removedPointers, s
             && !ignoredElements[groupKey]?.includes(index) 
             && !pointer.html.startsWith("<body")) {
     
-                selectHighlightedElement(groupKey, index, pointer.documentation);
+                // selectHighlightedElement(groupKey, index, pointer.documentation);
             
             }
         } 

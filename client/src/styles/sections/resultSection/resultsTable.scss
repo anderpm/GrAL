@@ -9,10 +9,14 @@
   background-color: $primary-color;
   overflow-y: auto;
   max-height: 50vh;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 
   & table{
     background-color: $secondary-color;
     border-collapse: collapse;
+    width: 100%;
 
     & img{
       all: initial;
