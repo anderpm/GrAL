@@ -38,12 +38,12 @@ export default function Main() : JSX.Element {
         */}
 
         <div id="react_chrome_extension" className= {`${extensionHidden && 'hidden'}`}>
-            <img 
+            {/* <img 
                 className="icon options" 
                 src={settingsGear} 
                 alt="open configuration options window" 
                 onClick={openOptionsPage} 
-            />
+            /> */}
             
             {/** <span className="icon close" onClick={()=>setExtensionHidden(!extensionHidden)}>&times;</span> */}
 

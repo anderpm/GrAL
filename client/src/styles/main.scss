@@ -5,6 +5,9 @@
 }
 
 #react_chrome_extension{
+    position: relative;
+    top: 20px;
+    
     & .icon {
         all:initial;
         position: absolute;
@@ -31,6 +34,7 @@
           border-radius: 18px;
           overflow: hidden;
           cursor: pointer;
+
         }
     }
 
