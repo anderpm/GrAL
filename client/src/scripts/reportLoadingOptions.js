@@ -42,7 +42,8 @@ export function removeLoadedReport(){
  */
 export async function uploadNewReport(uploadEvent){
 
-    const reportLoaded = await getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false);
+    const getReportLoaded = await getFromChromeStorage(window.location.hostname + ".reportIsLoaded", false);
+    const reportLoaded = JSON.parse(getReportLoaded);
 
     if(reportLoaded === "true") {
         if (!window.confirm("The upload will overwrite the current stored report. You want to continue?")) return;
@@ -55,7 +56,8 @@ export async function uploadNewReport(uploadEvent){
     reader.onload = async (uploadEvent) => {
         const newReport = JSON.parse(uploadEvent.target.result);
 
-        const currentReport = await getFromChromeStorage(window.location.hostname, false);
+        const getCurrentReport = await getFromChromeStorage(window.location.hostname, false);
+        const currentReport = JSON.parse(getCurrentReport);
 
         includeEditedFoundCases(newReport, currentReport);
 
