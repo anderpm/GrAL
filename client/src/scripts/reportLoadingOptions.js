@@ -70,7 +70,8 @@ export async function uploadNewReport(uploadEvent){
  */
 export async function downloadLoadedReport(){
 
-    const currentReport = await getFromChromeStorage(window.location.hostname, false);
+    const getCurrentReport = await getFromChromeStorage(window.location.hostname, false);
+    const currentReport = JSON.parse(getCurrentReport);
     const activeConformanceLevels = JSON.parse(localStorage.getItem("conformanceLevels"));
 
     currentReport.evaluationScope.conformanceTarget = "wai:WCAG2" + activeConformanceLevels[activeConformanceLevels.length - 1] + "-Conformance";
