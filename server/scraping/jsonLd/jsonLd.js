@@ -218,7 +218,31 @@ class JsonLd{
 
             }else if (webPageAssertion) return;
 
-            webSiteAssertion.hasPart.push({
+            /* webSiteAssertion.hasPart.push({
+                "type": "Assertion",
+                "testcase": "wcag2:" + criteriaId,
+                "assertedBy": [{
+                    "assertor": this.#evaluator.name, 
+                    "description": assertorDescription,
+                    "modifiedBy": [],
+                    "lastModifier": "",
+                }],
+                "subject": webPageURL,
+                "mode": "earl:automatic",
+                "result":
+                {
+                    "outcome": newOutcome,
+                    "description": description,
+                    "locationPointersGroup": locationPointersGroup
+                }
+            }); */
+
+
+            // Copiar el array antes de agregar el nuevo elemento
+            const newArray = [...webSiteAssertion.hasPart];
+
+            // Agregar al array
+            newArray.push({
                 "type": "Assertion",
                 "testcase": "wcag2:" + criteriaId,
                 "assertedBy": [{
@@ -236,6 +260,45 @@ class JsonLd{
                     "locationPointersGroup": locationPointersGroup
                 }
             });
+
+            if(criteriaId=="non-text-content"){
+                // Ordenar el nuevo array según el orden específico
+                newArray.sort((a, b) => {
+                    const order = {
+                        "earl:failed": 3,
+                        "earl:cantTell": 2,
+                        "earl:inapplicable": 1,
+                        "earl:passed": 0
+                    };
+
+                    const outcomeA = a.result.outcome
+                    const outcomeB = b.result.outcome
+
+                    return order[outcomeA] - order[outcomeB];
+                });
+            }else{
+                // Ordenar el nuevo array según el orden específico
+                newArray.sort((a, b) => {
+                    const order = {
+                        "earl:failed": 0,
+                        "earl:cantTell": 1,
+                        "earl:inapplicable": 2,
+                        "earl:passed": 3
+                    };
+
+                    const outcomeA = a.result.outcome
+                    const outcomeB = b.result.outcome
+
+                    return order[outcomeA] - order[outcomeB];
+                });
+            }
+
+            // Imprimir resultados para verificar el orden
+            console.log(criteriaId);
+            console.log(newArray.map(item => item.result.outcome));
+
+            // Asignar el nuevo array al objeto original
+            webSiteAssertion.hasPart = newArray;
 
         }finally{
             this.#lock = false;
