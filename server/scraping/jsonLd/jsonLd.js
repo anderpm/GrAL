@@ -200,7 +200,12 @@ class JsonLd{
                         if(docUrl.startsWith("https://www.w3.org/TR/WCAG21/")){
                             webPageAssertion.result.description += "\n " + path;
                         }else{
-                            webPageAssertion.result.description += "\n [" + path + "](" + docUrl + ")";
+                            // webPageAssertion.result.description += "\n [" + path + "](" + docUrl + ")";
+                            
+                            var temp = webPageAssertion.result.description;
+                            var count = (temp.match(/Instance/g) || []).length + 1;
+
+                            webPageAssertion.result.description += "\n [" + "Instance " + count + "](" + docUrl + ") \n";
                         }
                         
                         webPageAssertion.result.locationPointersGroup.push(newPointer);
@@ -211,7 +216,12 @@ class JsonLd{
                 if(docUrl.startsWith("https://www.w3.org/TR/WCAG21/")){
                     description += "\n\n Found cases locations: \n\n " + path;
                 }else{
-                    description += "\n\n Found cases locations: \n\n [" + path + "](" + docUrl + ")";
+                    // description += "\n\n Found cases locations: \n\n [" + path + "](" + docUrl + ")";
+
+                    var temp = description;
+                    var count = (temp.match(/Instance/g) || []).length + 1;
+
+                    description += "\n\n Found cases locations: \n\n [" + "Instance " + count + "](" + docUrl + ") \n";
                 }
                 
                 locationPointersGroup.push(newPointer);
