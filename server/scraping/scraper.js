@@ -1,6 +1,8 @@
 
 const pa11y = require('pa11y');
 const { URL } = require('url');
+const path = require('path');
+
 
 /**
  * Class representing a web page scraper to evaluate a pages accesibility.
@@ -357,6 +359,153 @@ class Scraper {
             page.click('#validate')
         ]);
         
+        await page.click('#sourcecode_link');
+        await page.waitForFunction(() => {
+            const loader = document.querySelector('#loader');
+            return loader && loader.classList.contains('display_none');
+        });
+
+        const results = await page.evaluate(() => {
+
+            const results = [];
+            
+            const paragraphsWithoutId = Array.from(document.querySelectorAll('#sourcecode > p:not([id])'));
+            
+            paragraphsWithoutId.forEach(paragraph => {
+
+                let html = "";
+                let nextElement = paragraph.nextElementSibling;
+                while (nextElement) {
+                    if (nextElement.tagName.toLowerCase() === 'p' && nextElement.id) {
+                        const clonElement = nextElement.cloneNode(true);
+                        const elementB = clonElement.querySelector('b');
+                        if (elementB) {
+                            elementB.textContent = '';
+                        }
+                        html = clonElement.innerText.trim();
+                        break;
+                    }
+                    nextElement = nextElement.nextElementSibling;
+                }
+
+                const firstSpan = paragraph.querySelector('span');
+                if (firstSpan) {
+                    const firstSpanClass = firstSpan.getAttribute('class');
+                    let outcome = "";
+                    if(firstSpanClass == "error"){
+                        outcome = "earl:failed";
+                    }else if(firstSpanClass == "warning"){
+                        outcome = "earl:cantTell";
+                    }
+            
+                    const a = firstSpan.querySelector('a');
+                    if (a) {
+                        const texto = a.textContent.trim();
+                        const regex = /\b(\d+\.\d+\.\d+)\b/g;
+                        const aCriterias = texto.match(regex);
+
+                        const aTechniques = texto.match(/Tech\s+.+/);
+                        const technique = aTechniques ? aTechniques[0] : '';
+
+                        const documentation = a.getAttribute('href');
+
+                        const spanStrong = paragraph.querySelector('.strong');
+                        if (spanStrong) {
+                            let description = spanStrong.textContent;
+                            description = description.replace(/\[.*?\]/g, '').trim();
+
+                            results.push({
+                                "criterias": aCriterias,
+                                "outcome": outcome,
+                                description,
+                                xpath: 'path-',
+                                html: html,
+                                "documentation": documentation
+                            });
+                        }
+                    }
+                }
+
+            });
+        
+            return results;
+
+        });
+
+
+        await page.click('#livepreview_link');
+        await page.waitForFunction(() => {
+            const loader = document.querySelector('#loader');
+            return loader && loader.classList.contains('display_none');
+        });
+        
+        const results2 = await page.evaluate(() => {
+            
+            var results2 = [];
+
+            const criteriaTable = Array.from(document.querySelectorAll('#table_sc_occ > tbody > tr'));
+
+            for(const criteriaTableRow of criteriaTable){
+                
+                const outcomes = Array.from(criteriaTableRow.children);
+
+                if (outcomes[1].textContent.match(/\d+/)[0] === "0" && 
+                    outcomes[2].textContent.match(/\d+/)[0] === "0"  && 
+                    outcomes[3].textContent.match(/\d+/)[0] !== "0" ){
+
+                    results2.push({
+                        "criterias": outcomes[0].querySelector("p").textContent,
+                        "outcome": "earl:passed",
+                        "description": "PASSED"
+                    })
+                }
+            }
+
+            return results2;
+        });
+        
+        const allResults = results.concat(results2);
+
+        await page.goto(webPage.url);
+
+        let i = 0;
+        const conteoCriterias = {};
+
+        for (const result of allResults){
+            
+            if(result.outcome === "earl:passed"){
+                await this.#jsonld.addNewAssertion(result.criterias, result.outcome, result.description, webPage.url);
+            }else{
+                for (const criteria of result.criterias){
+                    i = i+1;
+                    if (conteoCriterias[criteria]) {
+                        conteoCriterias[criteria]++;
+                    } else {
+                        conteoCriterias[criteria] = 1;
+                    }
+                    await this.#jsonld.addNewAssertion(criteria, result.outcome, result.description, webPage.url, result.xpath + i, result.html, result.documentation);
+                }
+            }
+
+        }
+
+        for (const criteria in conteoCriterias) {
+            console.log(`El criterio ${criteria} aparece ${conteoCriterias[criteria]} veces.`);
+        }
+
+
+        /* // Go to the evaluator page, configure it, and perform the evaluation
+        await page.goto("https://mauve.isti.cnr.it/singleValidation.jsp");
+        await page.waitForSelector('#uri');
+        await page.focus('#uri');
+        await page.keyboard.type(webPage.url);
+        await page.waitForSelector('#Level_of_Conformance');
+        await page.select('#Level_of_Conformance', 'AAA');
+        await Promise.all([
+            page.waitForNavigation({waitUntil: "domcontentloaded"}),
+            page.click('#validate')
+        ]);
+        
         await page.click('#livepreview_link');
         await page.waitForFunction(() => {
             const loader = document.querySelector('#loader');
@@ -437,18 +586,28 @@ class Scraper {
 
         await page.goto(webPage.url);
 
+        const conteoCriterias = {};
+
         for (const result of results){
 
             if(result.outcome === "earl:passed"){
                 await this.#jsonld.addNewAssertion(result.criterias, result.outcome, result.description, webPage.url);
             }else{
-
                 for (const criteria of result.criterias){
+                    if (conteoCriterias[criteria]) {
+                        conteoCriterias[criteria]++;
+                    } else {
+                        conteoCriterias[criteria] = 1;
+                    }
                     await this.#jsonld.addNewAssertion(criteria, result.outcome, result.description, webPage.url, result.xpath, result.html, result.documentation);
                 }
             }
 
         }
+
+        for (const criteria in conteoCriterias) {
+            console.log(`El criterio ${criteria} aparece ${conteoCriterias[criteria]} veces.`);
+        } */
     }
 
 
