@@ -40,17 +40,32 @@ const wcagCriterias = getSuccessCriterias();
 
 
 /**
- * ResultsTable component displays the evaluation results in a table format.
+ * OverallTable component displays the evaluation results in a table format.
  * @param {Object} conformanceLevels - Object containing the conformance levels.
- * @returns {JSX.Element|null} - JSX element representing the ResultsTable component.
+ * @returns {JSX.Element|null} - JSX element representing the OverallTable component.
  */
-export default function ResultsTable({conformanceLevels}:any): JSX.Element {
+export default function OverallTable({conformanceLevels}:any): JSX.Element {
 
     const [mantainExtended, setMantainExtended] = useState(false);
     const [reportTableContent, setReportTableContent] = useState([]);
     const [selectedMainCategories, setSelectedMainCategories] = useState(Array(reportTableContent.length).fill(false));
     const [pageSummaries, setPageSummaries] = useState(null);
+    const [overallResultData, setOverallResultData] = useState<GroupedElements[]>([]);
+    const [selectedOverallResults, setSelectedOverallResults] = useState(Array(overallResultData.length).fill(false));
 
+    interface Element {
+        path: string;
+        doc: string;
+        assertedBy: any[];
+        criteria: string;
+        outcome: string;
+    }
+    
+    interface GroupedElements {
+        html: string;
+        elems: Element[];
+    }
+    
     /**
      * useEffect hook to handle component initialization and state updates.
      */
@@ -79,6 +94,36 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
 
         getFromChromeStorage(window.location.hostname + ".pageSummaries", false)
         .then( value => value != null && setPageSummaries(JSON.parse(value)) );
+
+
+        getFromChromeStorage(window.location.hostname + ".overallResultData", false)
+        .then( value => {
+            if(value != null){
+                const data = JSON.parse(value);
+                const groupedElements: { [html: string]: GroupedElements } = {};
+
+                for(var i = 0; i < conformanceLevels.length; i++){
+                    let clgrElement = data[i];
+                    clgrElement.elemsCL.map((elements2:any) => {
+                        const html = elements2.html;
+                        const elements = elements2.elems;
+                        if (groupedElements.hasOwnProperty(html)) {
+                            groupedElements[html].elems.push(...elements);
+                        } else {
+                            groupedElements[html] = { html, elems: elements };
+                        }
+                    });               
+                }
+                
+                const newJsonData = Object.values(groupedElements);
+                setOverallResultData(newJsonData);
+            }
+        });
+
+        const storedValueOverall = sessionStorage.getItem("selectedOverallResults");
+        if(storedValueOverall){
+            setSelectedOverallResults(JSON.parse(storedValueOverall));
+        }
     }, []);
 
     /**
@@ -89,120 +134,39 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
         sessionStorage.setItem("selectedMainCategories", JSON.stringify(selectedMainCategories));
     }, [selectedMainCategories]);
 
-    const jsonData =  [
-        {
-            "conformanceLevel": "A",
-            "elemsCL": [
-                {
-                    "html": "",
-                    "elems": [
-                        {
-                            "path": "",
-                            "doc": "",
-                            "assertedBy": [],
-                            "criteria": "",
-                            "outcome": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "conformanceLevel": "AA",
-            "elemsCL": [
-                {
-                    "html": "",
-                    "elems": [
-                        {
-                            "path": "",
-                            "doc": "",
-                            "assertedBy": [],
-                            "criteria": "",
-                            "outcome": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "conformanceLevel": "AAA",
-            "elemsCL": [
-                {
-                    "html": "",
-                    "elems": [
-                        {
-                            "path": "",
-                            "doc": "",
-                            "assertedBy": [],
-                            "criteria": "",
-                            "outcome": ""
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-
-    // Lógica para llenar el array con los pointer.html
-    reportTableContent.forEach((mainCategory: any) => {
-        mainCategory.subCategories.forEach((subCategory: any) => {
-            subCategory.criterias.forEach((criterias: any) => {
-                criterias.hasPart?.forEach((part: any) => {
-                    if (part.groupedPointers && typeof part.groupedPointers === 'object' && Object.entries(part.groupedPointers).length > 0) {
-                        (Object.entries(part.groupedPointers) as [string, any][][])[0][1].forEach((pointer: any) => {
-                            
-                            let cL = -1;
-                            if(criterias.conformanceLevel=="A"){
-                                cL = 0;
-                            }else if(criterias.conformanceLevel=="AA"){
-                                cL = 1;
-                            }else if(criterias.conformanceLevel=="AAA"){
-                                cL = 2;
-                            }
-
-                            const elemIndex = jsonData[cL].elemsCL.findIndex(elem =>
-                                elem.html === pointer.html
-                            );
-
-                            if (elemIndex !== -1) {
-                                jsonData[cL].elemsCL[elemIndex].elems.push({
-                                    "path": pointer.path,
-                                    "doc": pointer.doc,
-                                    "assertedBy": pointer.assertedBy,
-                                    "criteria": criterias.criteria,
-                                    "outcome": part.outcome
-                                });
-                            }else{
-                                jsonData[cL].elemsCL.push({
-                                    "html": pointer.html,
-                                    "elems": [
-                                        {
-                                            "path": pointer.path,
-                                            "doc": pointer.documentation,
-                                            "assertedBy": pointer.assertedBy,
-                                            "criteria": criterias.criteria,
-                                            "outcome": part.outcome,
-                                        }
-                                    ]
-                                });              
-                            }
-
-                        });
-                    }
-                });
-            });
-        });
-    });
+    useEffect(() => {
+        sessionStorage.setItem("selectedOverallResults", JSON.stringify(selectedOverallResults));
+    }, [selectedOverallResults]);
 
     useEffect(() => {
-        sessionStorage.setItem("overallResultsData", JSON.stringify(jsonData));
-    }, [jsonData]);
+        getFromChromeStorage(window.location.hostname + ".overallResultData", false)
+        .then( value => {
+            if(value != null){
+                const data = JSON.parse(value);
+                const groupedElements: { [html: string]: GroupedElements } = {};
 
-    let cl = conformanceLevels.length;
+                for(var i = 0; i < conformanceLevels.length; i++){
+                    let clgrElement = data[i];
+                    clgrElement.elemsCL.map((elements2:any) => {
+                        const html = elements2.html;
+                        const elements = elements2.elems;
+                        if (groupedElements.hasOwnProperty(html)) {
+                            groupedElements[html].elems.push(...elements);
+                        } else {
+                            groupedElements[html] = { html, elems: elements };
+                        }
+                    });               
+                }
+                
+                const newJsonData = Object.values(groupedElements);
+                setOverallResultData(newJsonData);
+            }
+        });
+    }, [conformanceLevels]);
 
     /**
-     * Renders the ResultsTable component.
-     * @returns {JSX.Element|null} - JSX element representing the ResultsTable component.
+     * Renders the OverallTable component.
+     * @returns {JSX.Element|null} - JSX element representing the OverallTable component.
      */
     return(<>
         {localStorage.getItem("scope")?.includes(window.location.href) && (<>
@@ -216,93 +180,33 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
                         </tr>
                     </thead>
                     <tbody id="overallTableContent">
-
-                        {conformanceLevels.map((cl:any, clIndex:any) => (
-                            jsonData[clIndex].elemsCL.slice(1).map((elements:any, index:any) => (
-                                <tr 
-                                    className={"collapsible mainCategory" + (selectedMainCategories[index] ? " active" : "") }
-                                    onClick={() => collapsibleClickHandler(
-                                        selectedMainCategories, 
-                                        setSelectedMainCategories, 
-                                        index, 
-                                        mantainExtended, 
-                                        jsonData[0].elemsCL.length
-                                    )}
-                                >   
-                                    <td>
-                                        {index + 1 + " "} 
-                                        {elements.html.length < 54 ? 
-                                            parse(elements.html) :
-                                            parse(elements.html.substring(0, 54) + " ... ")
-                                        }
-                                    </td>
-                                    {/* <ResultCount 
-                                        category={mainCategory} 
-                                        conformanceLevels={conformanceLevels}
-                                        pageSummaries = {pageSummaries}
-                                    /> */}  
-                                </tr>
-                            ))
-                        ))}
-
-                        {/* {jsonData.map((mainCategory:any, index:any) => (<>
+                        {overallResultData.map((htmlGroupedElements:any, index) => (<>
                             <tr 
-                                className={"collapsible mainCategory" + (selectedMainCategories[index] ? " active" : "") }
-                                onClick={() => collapsibleClickHandler(
-                                    selectedMainCategories, 
-                                    setSelectedMainCategories, 
-                                    index, 
-                                    mantainExtended, 
-                                    reportTableContent.length
-                                )}
-                            >
-                                <td>{mainCategory.categoryTitle}</td>
-                                <ResultCount 
-                                    category={mainCategory} 
-                                    conformanceLevels={conformanceLevels}
-                                    pageSummaries = {pageSummaries}
-                                />
-                            </tr>
-                            { selectedMainCategories[index] && ( 
-                                <SubCategory 
-                                    subCategories={mainCategory.subCategories} 
-                                    mantainExtended={mantainExtended} 
-                                    conformanceLevels={conformanceLevels} 
-                                    pageSummaries={pageSummaries}
-                                /> 
+                            className={"collapsible groupedElements" + (selectedOverallResults[index] ? " active" : "") }
+                            onClick={() => collapsibleClickHandler(
+                                selectedOverallResults, 
+                                setSelectedOverallResults, 
+                                index, 
+                                mantainExtended, 
+                                overallResultData.length
                             )}
-                        </>))} */}    
-                    </tbody>
-                </table>
-            </div>
-
-            {/* <div id="resultsTable">
-                <table>
-                    <thead>
-                        <tr> <th>Standard</th> <OutcomeHeaders/> </tr>
-                    </thead>
-                    <tbody id="resultsTableContent">
-                        {reportTableContent.map((mainCategory:any, index:any) => (<>
-                            <tr 
-                                className={"collapsible mainCategory" + (selectedMainCategories[index] ? " active" : "") }
-                                onClick={() => collapsibleClickHandler(
-                                    selectedMainCategories, 
-                                    setSelectedMainCategories, 
-                                    index, 
-                                    mantainExtended, 
-                                    reportTableContent.length
-                                )}
-                            >
-                                <td>{mainCategory.categoryTitle}</td>
-                                <ResultCount 
-                                    category={mainCategory} 
+                            >   
+                                <td>
+                                    {index + 1 + " "} 
+                                    {htmlGroupedElements.html.length < 54 ? 
+                                        parse(htmlGroupedElements.html) :
+                                        parse(htmlGroupedElements.html.substring(0, 54) + " ... ")
+                                    }
+                                </td>
+                                {<ResultCount 
+                                    groupedElements={htmlGroupedElements} 
                                     conformanceLevels={conformanceLevels}
                                     pageSummaries = {pageSummaries}
-                                />
+                                />}  
                             </tr>
-                            { selectedMainCategories[index] && ( 
-                                <SubCategory 
-                                    subCategories={mainCategory.subCategories} 
+                            { selectedOverallResults[index] && ( 
+                                <Elements 
+                                    elements={htmlGroupedElements.elems} 
                                     mantainExtended={mantainExtended} 
                                     conformanceLevels={conformanceLevels} 
                                     pageSummaries={pageSummaries}
@@ -311,7 +215,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
                         </>))}
                     </tbody>
                 </table>
-            </div> */}
+            </div>
         </>)}
     </>);
     
@@ -319,67 +223,71 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
 
 
 /**
- * React component for displaying subcategories of the selected categories
+ * React component for displaying elements of the selected groupedElements
  * @param {Object} props - The component props.
- * @param {Array} props.subCategories - The array of subcategories.
+ * @param {Array} props.elements - The array of elements.
  * @param {boolean} props.mantainExtended - Indicates whether to maintain extended state.
  * @param {any} props.conformanceLevels - The conformance levels.
- * @returns {JSX.Element} The JSX element representing the subcategory component.
+ * @returns {JSX.Element} The JSX element representing the elements component.
  */
-function SubCategory({subCategories, mantainExtended, conformanceLevels, pageSummaries}:any){
+function Elements({elements, mantainExtended, conformanceLevels, pageSummaries}:any){
 
-    const [selectedSubCategories, setSelectedSubCategories] = useState(Array(subCategories.length).fill(false));
+    const [selectedElements, setSelectedElements] = useState(Array(elements.length).fill(false));
 
     /**
      * useEffect hook to handle component initialization and state updates.
      */
     useEffect(() => {
-        const storedValue = sessionStorage.getItem("selectedSubCategories");
+        const storedValue = sessionStorage.getItem("selectedElements");
         if(storedValue){
-            setSelectedSubCategories(JSON.parse(storedValue));
+            setSelectedElements(JSON.parse(storedValue));
         }
     }, []);
 
     /**
-     * useEffect hook to handle changes in selectedSubCategories state.
-     * Updates the sessionStorage with the selectedSubCategories value and removes element highlights.
+     * useEffect hook to handle changes in selectedElements state.
+     * Updates the sessionStorage with the selectedElements value and removes element highlights.
      */
     useEffect(() => {
-        sessionStorage.setItem("selectedSubCategories", JSON.stringify(selectedSubCategories));
-    }, [selectedSubCategories]);
+        sessionStorage.setItem("selectedElements", JSON.stringify(selectedElements));
+    }, [selectedElements]);
 
     return(<> 
-        {subCategories.map((subCategory:any, index:any) => (<>
-
+        {elements.map((element:any, index:any) => (<>
             <tr 
-                className={"collapsible subCategory" + (selectedSubCategories[index] ? " active" : "") }
+                className={"collapsible elements" + (selectedElements[index] ? " active" : "") }
                 onClick={() => collapsibleClickHandler(
-                    selectedSubCategories, 
-                    setSelectedSubCategories, 
+                    selectedElements, 
+                    setSelectedElements, 
                     index, 
                     mantainExtended, 
-                    subCategories.length
+                    elements.length
                 )}
             >
-                <td>{subCategory.subCategoryTitle}</td>
-                <ResultCount category={subCategory} conformanceLevels={conformanceLevels} pageSummaries={pageSummaries} />
+                <td>
+                    {index + 1 + " "} 
+                    {element.length < 54 ? 
+                        parse(element.path) :
+                        parse(element.path.substring(0, 54) + " ... ")
+                    }
+                </td>
+                {/* <ResultCount category={elements} conformanceLevels={conformanceLevels} pageSummaries={pageSummaries} /> */}
             </tr>
-            { selectedSubCategories[index] && ( 
+            {/* { selectedElements[index] && ( 
                 <Criterias 
-                    criterias={subCategory.criterias} 
+                    criterias={elements.criterias} 
                     mantainExtended={mantainExtended} 
                     conformanceLevels={conformanceLevels}
                     pageSummaries={pageSummaries}
                 /> 
-            )}
-        
+            )} */}
         </>))} 
     </>);
 }
 
 
 /**
- * React component for displaying the criterias of the selected subcategories.
+ * React component for displaying the criterias of the selected elements.
  * @param {Object} props - The component props.
  * @param {Array} props.criterias - The array of criterias.
  * @param {boolean} props.mantainExtended - Indicates whether to maintain extended state.
@@ -1017,21 +925,27 @@ export function OutcomeHeaders(){
 
 
 /**
- * Renders the result count for the criteria category.
- * @param {object} category - The category object.
+ * Renders the result count for the criteria groupedElements.
+ * @param {object} groupedElements - The groupedElements object.
  * @param {array} conformanceLevels - The conformance levels.
  */
-function ResultCount({category, conformanceLevels, pageSummaries}:any){
+function ResultCount({groupedElements, conformanceLevels, pageSummaries}:any){
     let passed = 0, failed = 0, cantTell = 0, inapplicable = 0, untested = 0;
 
-    const outcomes = category.webPageOutcomes[Object.keys(pageSummaries)[0]];
-    if(outcomes){
-        for(const conformanceLevel of conformanceLevels){
-            passed += outcomes["earl:passed"][conformanceLevel];
-            failed += outcomes["earl:failed"][conformanceLevel];
-            cantTell += outcomes["earl:cantTell"][conformanceLevel];
-            inapplicable += outcomes["earl:inapplicable"][conformanceLevel];
-            untested += outcomes["earl:untested"][conformanceLevel];
+    const elements = groupedElements.elems;
+    if(elements){
+        for(const element of elements){
+            if(element.outcome == "passed"){
+                passed ++;
+            }else if(element.outcome == "failed"){
+                failed ++;
+            }else if(element.outcome == "cantTell"){
+                cantTell ++;
+            }else if(element.outcome == "inapplicable"){
+                inapplicable ++;
+            }else if(element.outcome == "untested"){
+                untested ++;
+            }
         }
     }
     return(<> <td>{passed}</td><td>{failed}</td><td>{cantTell}</td><td>{inapplicable}</td><td>{untested}</td> </>);
