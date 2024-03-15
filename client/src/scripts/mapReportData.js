@@ -124,6 +124,121 @@ export async function mapReportData(evaluationreport = null, blackList = null){
     storeOnChromeStorage(window.location.hostname + ".pageSummaries", pageSummaries);
     storeOnChromeStorage(window.location.hostname + ".reportTableContent", getCategoryResults());
 
+    const jsonData =  [
+        {
+            "conformanceLevel": "A",
+            "elemsCL": [
+                {
+                    "html": "",
+                    "elems": [
+                        {
+                            "path": "",
+                            "doc": "",
+                            "assertedBy": [],
+                            "criteria": "",
+                            "outcome": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "conformanceLevel": "AA",
+            "elemsCL": [
+                {
+                    "html": "",
+                    "elems": [
+                        {
+                            "path": "",
+                            "doc": "",
+                            "assertedBy": [],
+                            "criteria": "",
+                            "outcome": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "conformanceLevel": "AAA",
+            "elemsCL": [
+                {
+                    "html": "",
+                    "elems": [
+                        {
+                            "path": "",
+                            "doc": "",
+                            "assertedBy": [],
+                            "criteria": "",
+                            "outcome": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    let reportTableContent = getCategoryResults();
+    
+    reportTableContent.forEach(mainCategory => {
+        mainCategory.subCategories.forEach(subCategory => {
+            subCategory.criterias.forEach(criterias => {
+                criterias.hasPart?.forEach(part => {
+                    if (part.groupedPointers && typeof part.groupedPointers === 'object' && Object.entries(part.groupedPointers).length > 0) {
+                        Object.entries(part.groupedPointers)[0][1].forEach(pointer => {
+                            let cL = -1;
+                            if (criterias.conformanceLevel == "A") {
+                                cL = 0;
+                            } else if (criterias.conformanceLevel == "AA") {
+                                cL = 1;
+                            } else if (criterias.conformanceLevel == "AAA") {
+                                cL = 2;
+                            }
+
+                            const elemIndex = jsonData[cL].elemsCL.findIndex(elem =>
+                                elem.html === pointer.html
+                            );
+
+                            if (elemIndex !== -1) {
+                                jsonData[cL].elemsCL[elemIndex].elems.push({
+                                    "path": pointer.path,
+                                    "doc": pointer.doc,
+                                    "assertedBy": pointer.assertedBy,
+                                    "criteria": criterias.criteria,
+                                    "outcome": part.outcome
+                                });
+                            } else {
+                                jsonData[cL].elemsCL.push({
+                                    "html": pointer.html,
+                                    "elems": [
+                                        {
+                                            "path": pointer.path,
+                                            "doc": pointer.documentation,
+                                            "assertedBy": pointer.assertedBy,
+                                            "criteria": criterias.criteria,
+                                            "outcome": part.outcome,
+                                        }
+                                    ]
+                                });
+                            }
+
+                        });
+                    }
+                });
+            });
+        });
+    });
+
+
+    const filteredData = jsonData.map(item => {
+        const filteredElemsCL = item.elemsCL.filter(elemsCLItem => elemsCLItem.html.trim() !== "");
+
+        item.elemsCL = filteredElemsCL;
+        return item;
+    }).filter(item => item.elemsCL.length > 0);
+
+    storeOnChromeStorage(window.location.hostname + ".overallResultData", filteredData);
+
     storeOnChromeStorage(window.location.hostname + ".reportIsLoaded", "true");
     //localStorage.setItem("scope", JSON.stringify(evaluationScope));
     window.location.reload();
