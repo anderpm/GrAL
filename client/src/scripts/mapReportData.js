@@ -132,11 +132,16 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                     "html": "",
                     "elems": [
                         {
-                            "path": "",
-                            "doc": "",
-                            "assertedBy": [],
-                            "criteria": "",
-                            "outcome": ""
+                            "outcome": "",
+                            "outcomeElems" : [
+                                {
+                                    "path": "",
+                                    "doc": "",
+                                    "assertedBy": [],
+                                    "criteria": "",
+                                    "outcome": ""
+                                }
+                            ]
                         }
                     ]
                 }
@@ -149,11 +154,16 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                     "html": "",
                     "elems": [
                         {
-                            "path": "",
-                            "doc": "",
-                            "assertedBy": [],
-                            "criteria": "",
-                            "outcome": ""
+                            "outcome": "",
+                            "outcomeElems" : [
+                                {
+                                    "path": "",
+                                    "doc": "",
+                                    "assertedBy": [],
+                                    "criteria": "",
+                                    "outcome": ""
+                                }
+                            ]
                         }
                     ]
                 }
@@ -166,11 +176,16 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                     "html": "",
                     "elems": [
                         {
-                            "path": "",
-                            "doc": "",
-                            "assertedBy": [],
-                            "criteria": "",
-                            "outcome": ""
+                            "outcome": "",
+                            "outcomeElems" : [
+                                {
+                                    "path": "",
+                                    "doc": "",
+                                    "assertedBy": [],
+                                    "criteria": "",
+                                    "outcome": ""
+                                }
+                            ]
                         }
                     ]
                 }
@@ -200,23 +215,46 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                             );
 
                             if (elemIndex !== -1) {
-                                jsonData[cL].elemsCL[elemIndex].elems.push({
-                                    "path": pointer.path,
-                                    "doc": pointer.doc,
-                                    "assertedBy": pointer.assertedBy,
-                                    "criteria": criterias.criteria,
-                                    "outcome": part.outcome
-                                });
+                                const outcomeIndex = jsonData[cL].elemsCL[elemIndex].elems.findIndex(elem =>
+                                    elem.outcome === part.outcome
+                                );
+                                if (outcomeIndex !== -1) {
+                                    jsonData[cL].elemsCL[elemIndex].elems[outcomeIndex].outcomeElems.push({
+                                        "path": pointer.path,
+                                        "doc": pointer.doc,
+                                        "assertedBy": pointer.assertedBy,
+                                        "criteria": criterias.criteria,
+                                        "outcome": part.outcome
+                                    })
+                                }else{
+                                    jsonData[cL].elemsCL[elemIndex].elems.push({
+                                        "outcome" : part.outcome,
+                                        "outcomeElems" : [
+                                            {
+                                                "path": pointer.path,
+                                                "doc": pointer.documentation,
+                                                "assertedBy": pointer.assertedBy,
+                                                "criteria": criterias.criteria,
+                                                "outcome": part.outcome,
+                                            }
+                                        ]
+                                    });
+                                }
                             } else {
                                 jsonData[cL].elemsCL.push({
                                     "html": pointer.html,
                                     "elems": [
                                         {
-                                            "path": pointer.path,
-                                            "doc": pointer.documentation,
-                                            "assertedBy": pointer.assertedBy,
-                                            "criteria": criterias.criteria,
-                                            "outcome": part.outcome,
+                                            "outcome" : part.outcome,
+                                            "outcomeElems" : [
+                                                {
+                                                    "path": pointer.path,
+                                                    "doc": pointer.documentation,
+                                                    "assertedBy": pointer.assertedBy,
+                                                    "criteria": criterias.criteria,
+                                                    "outcome": part.outcome,
+                                                }
+                                            ]
                                         }
                                     ]
                                 });

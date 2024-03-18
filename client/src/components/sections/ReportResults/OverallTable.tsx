@@ -60,10 +60,15 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
         criteria: string;
         outcome: string;
     }
+
+    interface OutcomeElement {
+        outcome : string;
+        outcomeElems : Element[];
+    }
     
     interface GroupedElements {
         html: string;
-        elems: Element[];
+        elems: OutcomeElement[];
     }
     
     /**
@@ -108,7 +113,15 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
                         const html = elements2.html;
                         const elements = elements2.elems;
                         if (groupedElements.hasOwnProperty(html)) {
-                            groupedElements[html].elems.push(...elements);
+                            elements.forEach((element: OutcomeElement) => {
+                                const existingOutcome = groupedElements[html].elems.find(e => e.outcome === element.outcome);
+                                if (existingOutcome) {
+                                    existingOutcome.outcomeElems.push(...element.outcomeElems);
+                                } else {
+                                    groupedElements[html].elems.push(element);
+                                }
+                            });
+                            //groupedElements[html].elems.push(...elements);
                         } else {
                             groupedElements[html] = { html, elems: elements };
                         }
@@ -151,7 +164,15 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
                         const html = elements2.html;
                         const elements = elements2.elems;
                         if (groupedElements.hasOwnProperty(html)) {
-                            groupedElements[html].elems.push(...elements);
+                            elements.forEach((element: OutcomeElement) => {
+                                const existingOutcome = groupedElements[html].elems.find(e => e.outcome === element.outcome);
+                                if (existingOutcome) {
+                                    existingOutcome.outcomeElems.push(...element.outcomeElems);
+                                } else {
+                                    groupedElements[html].elems.push(element);
+                                }
+                            });
+                            //groupedElements[html].elems.push(...elements);
                         } else {
                             groupedElements[html] = { html, elems: elements };
                         }
@@ -265,22 +286,28 @@ function Elements({elements, mantainExtended, conformanceLevels, pageSummaries}:
                 )}
             >
                 <td>
-                    {index + 1 + " "} 
+                    {element.outcome == "failed" ?
+                        "fail" : element.outcome == "cantTell" ?
+                            "cantTell" : element.outcome == "passed" ?
+                                "passed" : element.outcome == "innaplicable" ?
+                                    "innaplicable" : element.outcome == "untested" &&
+                                        "untested"}
+                    {/* {index + 1 + " "} 
                     {element.length < 54 ? 
                         parse(element.path) :
                         parse(element.path.substring(0, 54) + " ... ")
-                    }
+                    } */}
                 </td>
                 {/* <ResultCount category={elements} conformanceLevels={conformanceLevels} pageSummaries={pageSummaries} /> */}
             </tr>
-            {/* { selectedElements[index] && ( 
+            { selectedElements[index] && ( 
                 <Criterias 
-                    criterias={elements.criterias} 
+                    criterias={element.outcomeElems} 
                     mantainExtended={mantainExtended} 
                     conformanceLevels={conformanceLevels}
                     pageSummaries={pageSummaries}
                 /> 
-            )} */}
+            )}
         </>))} 
     </>);
 }
@@ -312,10 +339,10 @@ function Criterias({criterias, mantainExtended, conformanceLevels, pageSummaries
     return(<> 
         {criterias.map((criteria:any, index:any) => (<>
 
-            { conformanceLevels.includes(criteria.conformanceLevel) && (<>
+            {/* { conformanceLevels.includes(criteria.conformanceLevel) && (<> */}
                 <tr 
                     className={"collapsible criteria"} 
-                    style={{...outcome2Background[criteria.outcomes[Object.keys(pageSummaries)[0]]]}} 
+                    //style={{...outcome2Background[criteria.outcomes[Object.keys(pageSummaries)[0]]]}} 
                     onClick={() => collapsibleClickHandler(
                         selectedCriterias, 
                         setSelectedCriterias, 
@@ -325,7 +352,8 @@ function Criterias({criterias, mantainExtended, conformanceLevels, pageSummaries
                     )}
                 >
                     <td colSpan={2}>
-                        {criteria.hasOwnProperty("hasPart") ? <>
+                        {criteria.criteria}                       
+                        {/* {criteria.hasOwnProperty("hasPart") ? <>
                             {selectedCriterias[index] ?
                                 <img className='arrow'
                                 src={extendedArrow}
@@ -335,7 +363,7 @@ function Criterias({criterias, mantainExtended, conformanceLevels, pageSummaries
                                 src={contractedArrow}
                                 alt="Show information" height="20px"/>
                             }
-                            {/* <img 
+                            <img 
                                 className='arrow'
                                 src={ selectedCriterias[index] ? 
                                         getImgSrc("extendedArrow") 
@@ -343,18 +371,18 @@ function Criterias({criterias, mantainExtended, conformanceLevels, pageSummaries
                                         getImgSrc("contractedArrow") 
                                     } 
                                 alt="Show information" height="20px"
-                            /> */}
+                            />
                             {criteria.criteria}
                             
-                        </> : <> {criteria.criteria} </> }
+                        </> : <> {criteria.criteria} </> } */}
                     </td>
-                    <td colSpan={4}>{criteria.outcomes[Object.keys(pageSummaries)[0]]}</td>
+                    {/* <td colSpan={4}>{criteria.outcomes[Object.keys(pageSummaries)[0]]}</td> */}
                 </tr>
-                {criteria.hasOwnProperty("hasPart") && selectedCriterias[index] && ( 
+                {/* {criteria.hasOwnProperty("hasPart") && selectedCriterias[index] && ( 
                     <CriteriaResults criteria={criteria} />
-                )}
+                )} */}
         
-            </>)}
+            {/* </>)} */}
 
         </>))} 
     </>);
