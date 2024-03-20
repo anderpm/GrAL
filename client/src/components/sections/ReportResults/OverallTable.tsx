@@ -47,8 +47,6 @@ const wcagCriterias = getSuccessCriterias();
 export default function OverallTable({conformanceLevels}:any): JSX.Element {
 
     const [mantainExtended, setMantainExtended] = useState(false);
-    const [reportTableContent, setReportTableContent] = useState([]);
-    const [selectedMainCategories, setSelectedMainCategories] = useState(Array(reportTableContent.length).fill(false));
     const [pageSummaries, setPageSummaries] = useState(null);
     const [overallResultData, setOverallResultData] = useState<GroupedElements[]>([]);
     const [selectedOverallResults, setSelectedOverallResults] = useState(Array(overallResultData.length).fill(false));
@@ -71,6 +69,11 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
         elems: OutcomeElement[];
     }
     
+    function compareOutcomes(a: OutcomeElement, b: OutcomeElement): number {
+        const outcomes = ["failed", "cantTell", "passed", "inapplicable", "untested"];
+        return outcomes.indexOf(a.outcome) - outcomes.indexOf(b.outcome);
+    }
+
     /**
      * useEffect hook to handle component initialization and state updates.
      */
@@ -87,19 +90,9 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
         .then( value => {
             if(value != null) setMantainExtended(value) 
         });
-        getFromChromeStorage(window.location.hostname + ".reportTableContent", false)
-        .then( value => {
-            if(value != null) setReportTableContent(JSON.parse(value))
-        });
-        
-        const storedValue = sessionStorage.getItem("selectedMainCategories");
-        if(storedValue){
-            setSelectedMainCategories(JSON.parse(storedValue));
-        }
 
         getFromChromeStorage(window.location.hostname + ".pageSummaries", false)
         .then( value => value != null && setPageSummaries(JSON.parse(value)) );
-
 
         getFromChromeStorage(window.location.hostname + ".overallResultData", false)
         .then( value => {
@@ -121,10 +114,10 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
                                     groupedElements[html].elems.push(element);
                                 }
                             });
-                            //groupedElements[html].elems.push(...elements);
                         } else {
                             groupedElements[html] = { html, elems: elements };
                         }
+                        groupedElements[html].elems.sort((a, b) => compareOutcomes(a, b));
                     });               
                 }
                 
@@ -140,13 +133,9 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
     }, []);
 
     /**
-     * useEffect hook to handle changes in selectedMainCategories state.
-     * Updates the sessionStorage with the selectedMainCategories value and removes element highlights.
+     * useEffect hook to handle changes in selectedOverallResults state.
+     * Updates the sessionStorage with the selectedOverallResults value and removes element highlights.
      */
-    useEffect(() => {
-        sessionStorage.setItem("selectedMainCategories", JSON.stringify(selectedMainCategories));
-    }, [selectedMainCategories]);
-
     useEffect(() => {
         sessionStorage.setItem("selectedOverallResults", JSON.stringify(selectedOverallResults));
     }, [selectedOverallResults]);
@@ -172,15 +161,15 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
                                     groupedElements[html].elems.push(element);
                                 }
                             });
-                            //groupedElements[html].elems.push(...elements);
                         } else {
                             groupedElements[html] = { html, elems: elements };
                         }
+                        groupedElements[html].elems.sort((a, b) => compareOutcomes(a, b));
                     });               
                 }
                 
                 const newJsonData = Object.values(groupedElements);
-                setOverallResultData(newJsonData);
+                setOverallResultData(newJsonData);            
             }
         });
     }, [conformanceLevels]);
@@ -277,6 +266,7 @@ function Elements({elements, mantainExtended, conformanceLevels, pageSummaries}:
         {elements.map((element:any, index:any) => (<>
             <tr 
                 className={"collapsible elements" + (selectedElements[index] ? " active" : "") }
+                style={{...outcome2Background["earl:" + element.outcome]}} 
                 onClick={() => collapsibleClickHandler(
                     selectedElements, 
                     setSelectedElements, 
@@ -285,24 +275,27 @@ function Elements({elements, mantainExtended, conformanceLevels, pageSummaries}:
                     elements.length
                 )}
             >
-                <td>
-                    {element.outcome == "failed" ?
-                        "fail" : element.outcome == "cantTell" ?
-                            "cantTell" : element.outcome == "passed" ?
-                                "passed" : element.outcome == "innaplicable" ?
-                                    "innaplicable" : element.outcome == "untested" &&
+                <td colSpan={6}>
+                    {selectedElements[index] ?
+                        <img className='arrow'
+                        src={extendedArrow}
+                        alt="Show information" height="20px"/>
+                    :
+                        <img className='arrow'
+                        src={contractedArrow}
+                        alt="Show information" height="20px"/>
+                    }
+                    {element.outcome === "failed" ?
+                        "fail" : element.outcome === "cantTell" ?
+                            "cantTell" : element.outcome === "passed" ?
+                                "passed" : element.outcome === "innaplicable" ?
+                                    "innaplicable" : element.outcome === "untested" &&
                                         "untested"}
-                    {/* {index + 1 + " "} 
-                    {element.length < 54 ? 
-                        parse(element.path) :
-                        parse(element.path.substring(0, 54) + " ... ")
-                    } */}
                 </td>
-                {/* <ResultCount category={elements} conformanceLevels={conformanceLevels} pageSummaries={pageSummaries} /> */}
             </tr>
             { selectedElements[index] && ( 
-                <Criterias 
-                    criterias={element.outcomeElems} 
+                <OutcomeElems 
+                    outcomeElems={element.outcomeElems} 
                     mantainExtended={mantainExtended} 
                     conformanceLevels={conformanceLevels}
                     pageSummaries={pageSummaries}
@@ -314,626 +307,86 @@ function Elements({elements, mantainExtended, conformanceLevels, pageSummaries}:
 
 
 /**
- * React component for displaying the criterias of the selected elements.
+ * React component for displaying the outcomeElems of the selected elements.
  * @param {Object} props - The component props.
- * @param {Array} props.criterias - The array of criterias.
+ * @param {Array} props.outcomeElems - The array of outcomeElems.
  * @param {boolean} props.mantainExtended - Indicates whether to maintain extended state.
  * @param {any} props.conformanceLevels - The conformance levels.
- * @returns {JSX.Element} The JSX element representing the criterias component.
+ * @returns {JSX.Element} The JSX element representing the outcomeElems component.
  */
-function Criterias({criterias, mantainExtended, conformanceLevels, pageSummaries}:any){
+function OutcomeElems({outcomeElems, mantainExtended, conformanceLevels, pageSummaries}:any){
 
-    const [selectedCriterias, setSelectedCriterias] = useState(Array(criterias.length).fill(false));
+    const [selectedOutcomeElems, setSelectedOutcomeElems] = useState(Array(outcomeElems.length).fill(false));
 
     useEffect(() => {
-        const storedValue = sessionStorage.getItem("selectedCriterias");
+        const storedValue = sessionStorage.getItem("selectedOutcomeElems");
         if(storedValue){
-            setSelectedCriterias(JSON.parse(storedValue));
+            setSelectedOutcomeElems(JSON.parse(storedValue));
         } 
     }, []);
 
     useEffect(() => {
-        sessionStorage.setItem("selectedCriterias", JSON.stringify(selectedCriterias));
-    }, [selectedCriterias]);
+        sessionStorage.setItem("selectedOutcomeElems", JSON.stringify(selectedOutcomeElems));
+    }, [selectedOutcomeElems]);
 
     return(<> 
-        {criterias.map((criteria:any, index:any) => (<>
+        {outcomeElems.map((ocElems:any, index:any) => (<>
+            <tr 
+                className={"collapsible outcome Elements"}
+                style={{...outcome2Background["earl:" + ocElems.outcome]}} 
 
-            {/* { conformanceLevels.includes(criteria.conformanceLevel) && (<> */}
-                <tr 
-                    className={"collapsible criteria"} 
-                    //style={{...outcome2Background[criteria.outcomes[Object.keys(pageSummaries)[0]]]}} 
-                    onClick={() => collapsibleClickHandler(
-                        selectedCriterias, 
-                        setSelectedCriterias, 
-                        index, 
-                        mantainExtended, 
-                        criterias.length, 
-                    )}
-                >
-                    <td colSpan={2}>
-                        {criteria.criteria}                       
-                        {/* {criteria.hasOwnProperty("hasPart") ? <>
-                            {selectedCriterias[index] ?
-                                <img className='arrow'
-                                src={extendedArrow}
-                                alt="Show information" height="20px"/>
-                            :
-                                <img className='arrow'
-                                src={contractedArrow}
-                                alt="Show information" height="20px"/>
-                            }
-                            <img 
-                                className='arrow'
-                                src={ selectedCriterias[index] ? 
-                                        getImgSrc("extendedArrow") 
-                                    : 
-                                        getImgSrc("contractedArrow") 
-                                    } 
-                                alt="Show information" height="20px"
-                            />
-                            {criteria.criteria}
-                            
-                        </> : <> {criteria.criteria} </> } */}
-                    </td>
-                    {/* <td colSpan={4}>{criteria.outcomes[Object.keys(pageSummaries)[0]]}</td> */}
-                </tr>
-                {/* {criteria.hasOwnProperty("hasPart") && selectedCriterias[index] && ( 
-                    <CriteriaResults criteria={criteria} />
-                )} */}
-        
-            {/* </>)} */}
-
+                onClick={() => collapsibleClickHandler(
+                    selectedOutcomeElems, 
+                    setSelectedOutcomeElems, 
+                    index, 
+                    mantainExtended, 
+                    outcomeElems.length, 
+                )}
+            >
+                <td colSpan={6}>
+                    {selectedOutcomeElems[index] ?
+                        <img className='arrow'
+                        src={extendedArrow}
+                        alt="Show information" height="20px"/>
+                    :
+                        <img className='arrow'
+                        src={contractedArrow}
+                        alt="Show information" height="20px"/>
+                    }
+                    {ocElems.criteria}                      
+                </td>
+            </tr>
+            {selectedOutcomeElems[index] && ( 
+                <MoreInfo 
+                    moreInfo={ocElems} 
+                /> 
+            )}
         </>))} 
     </>);
 }
 
 
-
 /**
- * React component to display the results of the selected criteria.
- * @param {object} props - The component props.
- * @param {any} props.criteria - The criteria object.
- * @returns {JSX.Element} The criteria results component.
+ * React component for displaying moreInfo of the selected outcomeElems.
+ * @param {Object} props - The component props.
+ * @param {Array} props.moreInfo - The array of moreInfo.
+ * @returns {JSX.Element} The JSX element representing the moreInfo component.
  */
-function CriteriaResults({criteria}:any){  
-
-    const [selectedCriteriaResults, setSelectedCriteriaResults] = useState(Array(criteria.hasPart.length).fill(false));
-    const [editIndex, setEditIndex] = useState(-1);
-
-    const [removedPointers, setRemovedPointers] = useState([]);
-    const [editedPointersGroup, setEditedPointersGroup] = useState([]);
-    const [editedDescriptions, setEditedDescriptions] = useState([]);
-
-    /**
-     * Retrieves the found case from the evaluation report.
-     * @param {number} index - The index of the criteria result.
-     * @returns {Promise<Array<any>>} A promise that resolves to the evaluation report, report criteria, and found case index.
-     */
-    async function getFoundCaseFromReport(index:any){
-        
-        const evaluationReport = await getFromChromeStorage(window.location.hostname, false);
-
-        const criteriaTxt = wcagCriterias.find((elem:any) => elem.num === criteria.criteriaNumber);
-
-        const reportCriteria = evaluationReport.auditSample.find(
-            (elem:any) => elem.test.includes(criteriaTxt.id)
-        );
-    
-        const foundCaseIndex = reportCriteria.hasPart.findIndex(
-            (elem:any) => elem.subject === criteria.hasPart[index].webPage && 
-                elem.result.outcome.replace("earl:", "") === criteria.hasPart[index].outcome
-        );
-
-        return [evaluationReport, reportCriteria, foundCaseIndex];
-
-    }
-
-
-    /**
-     * Saves the changes made to the criteria result.
-     */
-    const saveChanges = async () => {
-        
-        const [evaluationReport, reportCriteria, foundCaseIndex] = await getFoundCaseFromReport(editIndex);
-
-        const foundCase = reportCriteria.hasPart[foundCaseIndex];
-        const locationPointersGroup = foundCase.result.locationPointersGroup;
-
-        const modifier = await getFromChromeStorage("authenticationState");
-
-        editedDescriptions.forEach((desc:any) => {
-
-
-            const editedDescription = criteria.hasPart[editIndex].descriptions.find(
-                (elem:any) => elem.assertor === desc.assertor
-            );
-            const assertorDescription = foundCase.assertedBy.find(
-                (elem:any) => elem.assertor === desc.assertor
-            );
-            assertorDescription.description = editedDescription.description;
-
-            if(!assertorDescription.modifiedBy.includes(modifier)){
-                assertorDescription.modifiedBy.push(modifier);
-            }
-
-            assertorDescription.lastModifier = modifier;
-
-        });
-
-        removedPointers.forEach((ptr:any) => {
-
-            const index = locationPointersGroup.findIndex(
-                (elem:any) => elem["ptr:expression"] === ptr.pointer.path
-            );
-
-            if(index !== -1){
-                locationPointersGroup.splice(index, 1);
-            }
-
-            for(const assertor of foundCase.assertedBy){
-                if(ptr.groupKey.includes(assertor.assertor)){
-                    if(!assertor.modifiedBy.includes(modifier)){
-                        assertor.modifiedBy.push(modifier);
-                    }
-        
-                    assertor.lastModifier = modifier;
-                }
-            }
-        
-        });
-
-        loadReport(evaluationReport);
-    };
-
-    /**
-     * Cancels the changes made to the found case.
-     */
-    const cancelChanges = () => {
-
-        editedPointersGroup.forEach((elem:any) => {
-            criteria.hasPart[editIndex].groupedPointers[elem.key] = elem.pointers;
-        });
-
-        editedDescriptions.forEach((oldValues:any) => {
-            const assertorDescription = criteria.hasPart[editIndex].descriptions.find(
-                (desc:any) => desc.assertor === oldValues.assertor
-            );
-            assertorDescription.description = oldValues.description;
-        });
-
-        removedPointers.forEach((ptr:any) => {
-            criteria.hasPart[editIndex].groupedPointers[ptr.groupKey].splice(ptr.index, 0, ptr.pointer);
-        }); 
-
-        setEditedPointersGroup([]);
-        setRemovedPointers([]);
-        setEditedDescriptions([]);
-        setEditIndex(-1);
-
-    };
-
-    /**
-     * Updates a description in the found case.
-     * @param {string} newValue - The new value of the description.
-     * @param {number} index - The index of the description to update.
-     */
-    const updateDescription = async (newValue:any, index:any) => {
-
-        const edited:any = [...editedDescriptions];
-
-        const editedAssertorDesc:any = criteria.hasPart[editIndex].descriptions[index];
-
-        if(edited.findIndex((elem:any) => elem.assertor === editedAssertorDesc.assertor) === -1){
-            edited.push({
-                assertor: editedAssertorDesc.assertor, 
-                description: editedAssertorDesc.description
-            });
-        }
-
-        editedAssertorDesc.description = newValue;
-
-        setEditedDescriptions(edited);
-
-    };
-
-
-
-
-    /**
-     * Removes a found case from the report.
-     * @param {number} index - The index of the found case to remove.
-     */
-    const removeFoundCase = async (index:any) =>{
-
-        if(!window.confirm("Are you sure you want to remove this found case?")) return;
-    
-        const [evaluationReport, reportCriteria, foundCaseIndex] = await getFoundCaseFromReport(index);
-    
-        removeFoundCaseFromReport(reportCriteria, foundCaseIndex);
-    
-        loadReport(evaluationReport);
-    
-    };
-
-
-
-
-    function removeFoundCaseFromReport(reportCriteria:any, foundCaseIndex:any){
-
-        reportCriteria.hasPart.splice(foundCaseIndex, 1);
-    
-        if(reportCriteria.hasPart.length === 0){
-
-            reportCriteria.result.outcome = "earl:untested";
-            reportCriteria.result.description = "";
-            delete reportCriteria.assertedBy;
-            delete reportCriteria.mode;
-
-        }else{
-
-            let newOutcome = "earl:untested";
-    
-            for(const foundCase of reportCriteria.hasPart){
-                if(newOutcome === "earl:untested" 
-                ||(newOutcome === "earl:inapplicable" && foundCase.result.outcome !== "earl:untested") 
-                ||(newOutcome === "earl:passed" && (foundCase.result.outcome === "earl:failed" || foundCase.result.outcome === "earl:cantTell")) 
-                ||(newOutcome === "earl:cantTell" && foundCase.result.outcome === "earl:failed")){
-                    newOutcome = foundCase.result.outcome;
-                }
-            }
-
-            reportCriteria.result.outcome = newOutcome;
-            reportCriteria.result.description = outcome2Description[newOutcome];
-        }
-
-    }
-
-
-
-
-    /**
-     * Removes a description from the found case.
-     * @param {number} index - The index of the description to remove.
-     */
-    const removeDescription = async (index:any) => {
-
-        if(!window.confirm("Are you sure you want to remove this assertors results?")) return;
-
-        const [evaluationReport, reportCriteria, foundCaseIndex] = await getFoundCaseFromReport(index[0]);
-
-        const foundCase = reportCriteria.hasPart[foundCaseIndex];
-
-        const description2remove = criteria.hasPart[index[0]].descriptions[index[1]].assertor;
-
-        const assertorIndex = foundCase.assertedBy.findIndex(
-            (elem:any) => elem.assertor === description2remove
-        );
-        foundCase.assertedBy.splice(assertorIndex, 1);
-
-        if(foundCase.assertedBy.length === 0){
-
-            removeFoundCaseFromReport(reportCriteria, foundCaseIndex);
-
-        }else{
-
-            const locationPointersGroup = foundCase.result.locationPointersGroup;
-
-            for(let i = 0; i < locationPointersGroup.length; i++){
-    
-                const pointerAssertors = locationPointersGroup[i].assertedBy;
-    
-                if(pointerAssertors.includes(description2remove)){
-    
-                    if(pointerAssertors.length === 1){
-                        locationPointersGroup.splice(i, 1);
-                        i--;
-                    }else{
-                        pointerAssertors.splice(pointerAssertors.indexOf(description2remove), 1);
-                    }
-    
-                }
-            }
-
-        }
-
-        loadReport(evaluationReport);
-    };
-
-
-    return(<>
-        {criteria.hasPart.map((result:any, index:any) => (<>
-
-            {result.webPage === "https://www.euskadi.eus/diccionario-elhuyar/" && (<>
-                <tr 
-                    className="collapsible criteriaResult" 
-                    onClick={
-                        () => collapsibleClickHandler(selectedCriteriaResults, setSelectedCriteriaResults, index, false, criteria.hasPart.length)
-                    }
-                >
-                    <td colSpan={6} style={{...outcome2Background["earl:" + result.outcome]}}>
-
-                        {selectedCriteriaResults[index] ?
-                                <img className='arrow'
-                                src={extendedArrow}
-                                alt="Show information" 
-                                height="20px"/>
-                            :
-                                <img className='arrow'
-                                src={contractedArrow}
-                                alt="Show information" 
-                                height="20px"/>
-                        }
-
-                        {/* <img 
-                            className='arrow'
-                            src={ selectedCriteriaResults[index] ? 
-                                    getImgSrc("extendedArrow") 
-                                : 
-                                    getImgSrc("contractedArrow") 
-                                } 
-                            alt="Show information" 
-                            height="20px"
-                        /> */}
-
-                        {result.outcome}
-
-                        {editIndex === index ? <>
-                            <Button 
-                                classList={"primary small spaced"} 
-                                onClickHandler={saveChanges}
-                                innerText={"Save"}
-                            />
-                            <Button 
-                                classList={"secondary small spaced"} 
-                                onClickHandler={cancelChanges}
-                                innerText={"Cancel"}
-                            />
-                        </> : <>
-                            <img 
-                                className='editIcon'
-                                src={edit} 
-                                alt="Edit found case" 
-                                title="Edit found case" 
-                                height="16px" 
-                                onClick={()=>{
-                                    if(editIndex !== -1) cancelChanges();
-                                    setEditIndex(index);
-                                }}
-                            />
-                            <img 
-                                className='removeIcon'
-                                src={remove
-                                } 
-                                alt="Remove found case"
-                                title="Remove found case"
-                                height="16px" 
-                                onClick={()=>removeFoundCase(index)}
-                            />
-                        </>}
-                        
-                    </td>
-                </tr>
-
-                {selectedCriteriaResults[index] && (<>
-                
-                    {result.descriptions.map((element:any, i:any) => (<>
-
-                        <tr>
-                            <td style={{textAlign:"left", fontWeight:"bold", paddingTop:"10px"}} colSpan={6}>
-                                
-                                {parse("@" + element.assertor)}
-
-                                {editIndex !== index && (<>
-
-                                    {element.modifiedBy.length > 0 && (<>
-                                        {" - modifier: @" + element.lastModifier} 
-                                    </>)}
-
-                                    <img 
-                                        className='blacklistIcon' 
-                                        src={blacklist} 
-                                        alt="Add message to blacklist" 
-                                        title="Add message to blacklist"
-                                        height="16px" 
-                                        onClick={() => blackListElement({
-                                            evaluator: element.assertor, 
-                                            criteria: criteria.criteria, 
-                                            outcome: result.outcome, 
-                                            message: element.description
-                                        })}
-                                    />
-                                    
-                                    <img 
-                                        className='removeIcon' 
-                                        src={remove} 
-                                        alt="Remove message" 
-                                        title="Remove message"
-                                        height="16px"
-                                        onClick={() => removeDescription([index, i])}
-                                    />
-
-                                </>)}
-
-                            </td>
-                        </tr>
-                        <tr>
-                            {editIndex === index ?
-                                <textarea 
-                                    className='textInput'
-                                    style={{textAlign:"left"}} 
-                                    value={element.description} 
-                                    onChange={(e:any) => updateDescription(e.target.value, i)} 
-                                />
-                            :
-                                <td style={{textAlign:"left"}} colSpan={6}>{element.description}</td>
-                            }
-                        </tr>
-                    
-                    </>))}
-
-                    { result.hasOwnProperty("groupedPointers") && (
-                        <CriteriaResultPointers 
-                            resultGroupedPointers={result.groupedPointers} 
-                            edit={editIndex === index} 
-                            removedPointers={removedPointers} 
-                            setRemovedPointers={setRemovedPointers} 
-                        />
-                    )}
-                    
-                </>)}
-            </>)}
-            
-            
-
-        </>))} 
-    </>);
-}
-
-
-
-/**
- * Renders the pointers for the selected criteria result.
- * @param {object} resultGroupedPointers - The grouped pointers for the criteria result.
- * @param {boolean} edit - Flag indicating if the pointers are editable.
- * @param {array} removedPointers - Array of removed pointers.
- * @param {function} setRemovedPointers - Function to set the removed pointers.
- */
-function CriteriaResultPointers({resultGroupedPointers, edit, removedPointers, setRemovedPointers}:any){  
-
-    const [selectedPointer, setSelectedPointer] = useState<{ [groupKey: string]: number | null }>({});
-
-    const [hiddenElements, setHiddenElements] = useState<{ [groupKey: string]: number[] }>({});
-
-    const [ignoredElements, setIgnoredElements] = useState<{ [groupKey: string]: number[] }>({});
-
-    useEffect(() => {
-
-        const newHiddenElements: { [groupKey: string]: number[] } = {};
-        const newIgnoredElements: { [groupKey: string]: number[] } = {};
-
-        for (const groupKey in resultGroupedPointers) {
-            for (let i = 0; i < resultGroupedPointers[groupKey].length; i++) {
-
-                const pointer = resultGroupedPointers[groupKey][i];
-                const pointedElement = getElementByPath(pointer.path, pointer.innerText);
-
-                if(pointedElement){
-                    if(pointedElement.getAttribute('type') === "hidden" || pointedElement.getAttribute("hidden")!==null){
-                        
-                        if (!newHiddenElements[groupKey]) {
-                            newHiddenElements[groupKey] = [];
-                        }
-                        newHiddenElements[groupKey].push(i);
-
-                    }else if(!pointer.html.startsWith("<body")){
-                        // highlightElement(pointedElement, groupKey, i);
-                    }
-                }else{
-                    if (!newIgnoredElements[groupKey]) {
-                        newIgnoredElements[groupKey] = [];
-                    }
-                    newIgnoredElements[groupKey].push(i);
-                }
-            }
-        }
-        setHiddenElements(newHiddenElements);
-        setIgnoredElements(newIgnoredElements);
-    }, [resultGroupedPointers]);
-
-    /**
-     * Handles the click event on a pointer.
-     * @param {string} groupKey - The group key of the pointer.
-     * @param {number} index - The index of the pointer.
-     */
-    function handlePointerClick(groupKey:string, index:number){
-
-        // unselectHighlightedElement(); // If previously selected
-
-        if (selectedPointer[groupKey] === index) {
-
-            setSelectedPointer({});
-
-        } else{
-
-            setSelectedPointer({ [groupKey]: index });
-
-            const pointer = resultGroupedPointers[groupKey][index];
-
-            if(!hiddenElements[groupKey]?.includes(index) 
-            && !ignoredElements[groupKey]?.includes(index) 
-            && !pointer.html.startsWith("<body")) {
-    
-                // selectHighlightedElement(groupKey, index, pointer.documentation);
-            
-            }
-        } 
-
-    }
-
-    /**
-     * Handles the click event on the remove pointer icon.
-     * @param {string} groupKey - The group key of the pointer.
-     * @param {number} index - The index of the pointer.
-     */
-    function handleRemovePointerClick(groupKey:string, index:any){
-
-        const newRemovedPointers = [...removedPointers];
-        newRemovedPointers.push({
-            pointer: resultGroupedPointers[groupKey][index],
-            groupKey,
-            index
-        });
-        setRemovedPointers(newRemovedPointers);
-
-        resultGroupedPointers[groupKey].splice(index, 1);
-
-    }
-
-    return(<>
-        
-        {Object.entries(resultGroupedPointers).map(([groupKey, groupPointers]:any) => (<>
-
-            <tr><td colSpan={6} style={{textAlign:"left"}}>
-
-                <span style={{fontWeight: "bold", paddingTop:"10px"}}>{"[ " + groupKey + " ]"}</span>
-
-                {groupPointers.map((pointer:any, index:any) => (
-
-                    <pre className="codigo_analisis"
-                        style={!hiddenElements[groupKey]?.includes(index) && !ignoredElements[groupKey]?.includes(index) ? 
-                            (selectedPointer[groupKey] === index ? { border: "3px solid #FF3633" } : { border: "1px solid #005a6a" }) 
-                            : { color:"black" }
-                        }
-                    >
-                        <span onClick={() => handlePointerClick(groupKey, index)}>
-                            {index + 1}. {selectedPointer[groupKey] === index ? 
-                                parse(pointer.html) 
-                            : 
-                                parse(pointer.html.substring(0, 27) + " ... ")
-                            } 
-                            {hiddenElements[groupKey]?.includes(index) && "(HIDDEN)"}
-                        </span>
-                        
-                        {edit && (
-                            <img 
-                                className='removePointerIcon' 
-                                src={remove} 
-                                alt="Remove pointer from list" 
-                                title="Remove pointer" 
-                                height="16px" 
-                                onClick={() => handleRemovePointerClick(groupKey, index)}
-                            />
-                        )}
-                        
-                    </pre> 
-                    
-                ))}
- 
-            </td></tr>
-
+function MoreInfo({moreInfo}:any){
+
+    return(<> 
+        {moreInfo.descriptions.map((desc:any, index:any) => (<>
+            <tr>
+                <td style={{textAlign:"left", fontWeight:"bold", paddingTop:"10px"}} colSpan={6}>
+                    {parse("@" + desc.assertor)}
+                </td>
+            </tr>
+            <tr>
+                <td style={{textAlign:"left"}} colSpan={6}>
+                    {desc.description}
+                </td>
+            </tr>
         </>))}
-
     </>);
 }
 
@@ -963,15 +416,15 @@ function ResultCount({groupedElements, conformanceLevels, pageSummaries}:any){
     const elements = groupedElements.elems;
     if(elements){
         for(const element of elements){
-            if(element.outcome == "passed"){
+            if(element.outcome === "passed"){
                 passed ++;
-            }else if(element.outcome == "failed"){
+            }else if(element.outcome === "failed"){
                 failed ++;
-            }else if(element.outcome == "cantTell"){
+            }else if(element.outcome === "cantTell"){
                 cantTell ++;
-            }else if(element.outcome == "inapplicable"){
+            }else if(element.outcome === "inapplicable"){
                 inapplicable ++;
-            }else if(element.outcome == "untested"){
+            }else if(element.outcome === "untested"){
                 untested ++;
             }
         }
