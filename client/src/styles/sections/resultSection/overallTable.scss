@@ -120,6 +120,11 @@
       background-color: $intermediate-color;
       font-style: italic;
     }
+
+    & .html {
+      max-width: 200px;
+      word-wrap: break-word;
+    }
   }
 
   & .elements{

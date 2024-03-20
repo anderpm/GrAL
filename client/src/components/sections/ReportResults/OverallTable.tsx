@@ -201,12 +201,13 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
                                 overallResultData.length
                             )}
                             >   
-                                <td>
+                                <td className="html">
                                     {index + 1 + " "} 
-                                    {htmlGroupedElements.html.length < 54 ? 
+                                    {/* {htmlGroupedElements.html.length < 54 ? 
                                         parse(htmlGroupedElements.html) :
                                         parse(htmlGroupedElements.html.substring(0, 54) + " ... ")
-                                    }
+                                    } */}
+                                    {parse(htmlGroupedElements.html)}
                                 </td>
                                 {<ResultCount 
                                     groupedElements={htmlGroupedElements} 
