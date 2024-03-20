@@ -139,7 +139,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                     "doc": "",
                                     "assertedBy": [],
                                     "criteria": "",
-                                    "outcome": ""
+                                    "outcome": "",
+                                    "descriptions" : []
                                 }
                             ]
                         }
@@ -161,7 +162,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                     "doc": "",
                                     "assertedBy": [],
                                     "criteria": "",
-                                    "outcome": ""
+                                    "outcome": "",
+                                    "descriptions" : []
                                 }
                             ]
                         }
@@ -183,7 +185,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                     "doc": "",
                                     "assertedBy": [],
                                     "criteria": "",
-                                    "outcome": ""
+                                    "outcome": "",
+                                    "descriptions" : []
                                 }
                             ]
                         }
@@ -202,11 +205,11 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                     if (part.groupedPointers && typeof part.groupedPointers === 'object' && Object.entries(part.groupedPointers).length > 0) {
                         Object.entries(part.groupedPointers)[0][1].forEach(pointer => {
                             let cL = -1;
-                            if (criterias.conformanceLevel == "A") {
+                            if (criterias.conformanceLevel === "A") {
                                 cL = 0;
-                            } else if (criterias.conformanceLevel == "AA") {
+                            } else if (criterias.conformanceLevel === "AA") {
                                 cL = 1;
-                            } else if (criterias.conformanceLevel == "AAA") {
+                            } else if (criterias.conformanceLevel === "AAA") {
                                 cL = 2;
                             }
 
@@ -224,7 +227,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                         "doc": pointer.doc,
                                         "assertedBy": pointer.assertedBy,
                                         "criteria": criterias.criteria,
-                                        "outcome": part.outcome
+                                        "outcome": part.outcome,
+                                        "descriptions" : part.descriptions
                                     })
                                 }else{
                                     jsonData[cL].elemsCL[elemIndex].elems.push({
@@ -236,6 +240,7 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                                 "assertedBy": pointer.assertedBy,
                                                 "criteria": criterias.criteria,
                                                 "outcome": part.outcome,
+                                                "descriptions" : part.descriptions
                                             }
                                         ]
                                     });
@@ -253,6 +258,7 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                                     "assertedBy": pointer.assertedBy,
                                                     "criteria": criterias.criteria,
                                                     "outcome": part.outcome,
+                                                    "descriptions" : part.descriptions
                                                 }
                                             ]
                                         }
