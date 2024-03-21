@@ -19,7 +19,8 @@ class JsonLd{
             "ac": { "name": "AChecker", "url": "https://achecker.achecks.ca/checker/index.php"},
             "pa": { "name": "Pa11y", "url": "https://github.com/pa11y/pa11y"},
             "a11y": { "name": "A11Y", "url": "https://github.com/ainspector/a11y-evaluation-library"},
-            "lh": { "name": "Lighthouse", "url": "https://github.com/GoogleChrome/lighthouse#readme"}
+            "lh": { "name": "Lighthouse", "url": "https://github.com/GoogleChrome/lighthouse#readme"},
+            "wv": { "name": "WAVE", "url": "https://wave.webaim.org"}
         };
         this.#evaluator = evaluators[evaluator];
 

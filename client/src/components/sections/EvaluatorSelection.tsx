@@ -12,7 +12,8 @@ const defaultCheckboxes = [
   { checked: false, label: "Mauve - Website", href: "https://mauve.isti.cnr.it/singleValidation.jsp"},
   { checked: false, label: "A11y - Library", href: "https://github.com/ainspector/a11y-evaluation-library"},
   { checked: false, label: "Pa11y - Library", href: "https://www.npmjs.com/package/pa11y"},
-  { checked: false, label: "Lighthouse - Library", href: "https://developer.chrome.com/docs/lighthouse/overview/"}
+  { checked: false, label: "Lighthouse - Library", href: "https://developer.chrome.com/docs/lighthouse/overview/"},
+  { checked: false, label: "WAVE - Website", href: "https://wave.webaim.org"}
 ];
 
 /**

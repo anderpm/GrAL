@@ -138,16 +138,16 @@ export async function evaluateScope(setAnimateBtn){
     const scope = JSON.parse(localStorage.getItem("scope"));
 
     const checkboxes = JSON.parse(localStorage.getItem("checkboxes"));
-    const [am, ac, mv, a11y, pa, lh] = checkboxes.map(({ checked }) => checked);
+    const [am, ac, mv, a11y, pa, lh, wv] = checkboxes.map(({ checked }) => checked);
 
-    if([am, ac, mv, a11y, pa, lh].every(val => val === false)) {
+    if([am, ac, mv, a11y, pa, lh, wv].every(val => val === false)) {
         alert("You need to choose at least one analizer");
         return;
     }
 
     setAnimateBtn("evaluate");
 
-    const bodyData = JSON.stringify({ am, ac, mv, a11y, pa, lh, scope });
+    const bodyData = JSON.stringify({ am, ac, mv, a11y, pa, lh, wv, scope });
 
     fetchServer(bodyData, "scrapeAccessibilityResults")
     .then( async (result) => {
@@ -172,8 +172,8 @@ export async function evaluateScope(setAnimateBtn){
 export async function testEvaluators(){
 
     const checkboxes = JSON.parse(localStorage.getItem("checkboxes"));
-    const [am, ac, mv, a11y, pa, lh] = checkboxes.map(({ checked }) => checked);
-    const body = JSON.stringify({ am, ac, mv, a11y, pa, lh });
+    const [am, ac, mv, a11y, pa, lh, wv] = checkboxes.map(({ checked }) => checked);
+    const body = JSON.stringify({ am, ac, mv, a11y, pa, lh, wv });
 
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 600000);

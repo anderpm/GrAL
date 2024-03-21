@@ -52,7 +52,7 @@ const withPage = (browser) => async (fn) => {
  */
 async function scrapeSelected(request){
 
-	const activeEvaluators = ["am", "ac", "mv", "a11y", "pa", "lh"].filter((evaluator) => request[evaluator]);
+	const activeEvaluators = ["am", "ac", "mv", "a11y", "pa", "lh", "wv"].filter((evaluator) => request[evaluator]);
 
 	console.time('Execution Time');
 
