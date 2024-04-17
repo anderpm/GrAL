@@ -2,6 +2,10 @@
 const pa11y = require('pa11y');
 const { URL } = require('url');
 const path = require('path');
+const { exec } = require('child_process');
+const fs = require('fs');
+const { JSDOM } = require('jsdom');
+const os = require('os');
 
 
 /**
@@ -26,7 +30,7 @@ class Scraper {
     */
     constructor(evaluator, jsonLd){
 
-        if (!['am', 'ac', 'mv', 'a11y', 'pa', 'lh'].includes(evaluator)) {
+        if (!['am', 'ac', 'mv', 'a11y', 'pa', 'lh', 'tv'].includes(evaluator)) {
             throw new Error(evaluator.toUpperCase() + " is not a valid evaluator !!!");
         }
 
@@ -847,6 +851,148 @@ class Scraper {
             } 
         }
     }
+
+
+
+    /**
+     * Scrapes results from the Total Validator evaluator and loads them into the jsonLd..
+     * @async
+     * @function tvScraper
+     * @param {object} webPage - The web page object to scrape.
+     * @param {object} page - The Puppeteer page object to use for web scraping.
+     * @returns {void}
+     */
+    async tvScraper(webPage, page){
+
+        console.log("Starting scraping with Total Validator evaluator...");
+        console.log("Executing SikuliX script...");
+        
+        const currentFilePath = __filename;
+        const projectPath = currentFilePath.substring(0, currentFilePath.indexOf('\\server\\scraping\\scraper.js'));
+
+
+        // Obtener la ruta del escritorio
+        const desktopPath = path.join(os.homedir(), 'Desktop');
+        // Luego, puedes usar desktopPath en tu código
+        console.log("La ruta al escritorio es:", desktopPath);
+
+        
+        exec('"' + projectPath + '\\server\\sikulix\\sikulixide-2.0.5.jar" -r "'+ projectPath + '\\server\\sikulix\\totalValidator.sikuli" --args ' + webPage.url + ' ', async (error, stdout, stderr) => {
+            if (error) {
+            console.error(`Error al ejecutar el comando: ${error}`);
+            return;
+            }
+            //console.log(`Resultado: ${stdout}`);
+
+
+            // Lee el contenido del archivo HTML
+            const htmlContent = fs.readFileSync(desktopPath + '\\totalValidator.html', 'utf-8');
+
+            // Crea un DOM virtual utilizando JSDOM
+            const dom = new JSDOM(htmlContent);
+
+            // Accede al documento
+            const document = dom.window.document;
+
+            // Ahora puedes utilizar document.querySelector(), document.querySelectorAll(), etc.
+            // Por ejemplo, para encontrar todos los elementos <h3> con la clase "nct ColE stats":
+            const h3Elements = document.querySelectorAll('h3');
+
+            const results = [];
+
+            // Itera sobre los elementos <h3> encontrados
+            h3Elements.forEach(h3 => {
+                console.log("Texto del elemento h3", h3.textContent.trim());
+
+                const text = h3.textContent.trim();
+                const match = text.match(/^\d+\s*(.*)$/); // Expresión regular para capturar el texto después del número
+    
+                let outcome = "";
+                if(match[1] == "Errors"){
+                    outcome = "earl:failed";
+                }else if(match[1] == "Warnings" || match[1] == "Probable Errors"){
+                    outcome = "earl:cantTell";
+                }
+
+                // Encuentra el siguiente elemento <ul> después del elemento <h3>
+                const ulElement = h3.nextElementSibling;
+
+                // Si se encuentra un elemento <ul>, busca los elementos <li> dentro de él
+                if (ulElement) {
+                    const liElements = ulElement.querySelectorAll('li');
+                    // Itera sobre los elementos <li>
+                    liElements.forEach(li => {
+                        const span = li.querySelector('span');
+                        const inputValue = span.textContent.trim();                       
+                        //const liText = li.span.textContent.trim();
+                        if (/(WCAG2 A|WCAG2 AA|WCAG2 AAA)/.test(inputValue)) {
+                            console.log("Texto del elemento li:", inputValue);
+                            const ul = li.querySelector('ul');
+                            const li2Elements = ul.querySelectorAll('li');
+                            li2Elements.forEach(li => {
+                                const span = li.querySelector('span');
+                                const text = span.textContent.trim();                       
+                                //console.log("Texto SC:", text); 
+                                // Expresión regular para encontrar patrones "x.x.x"
+                                const regex = /\b\d+\.\d+\.\d+\b/g; // \b asegura que solo coincida con números enteros
+
+                                // Buscar el texto después del primer ":"
+                                const match = text.match(/:(.*)/);
+
+                                let description = "";
+                                if (match) {
+                                    // match[1] contiene el texto después del primer ":"
+                                    description = match[1].trim();
+                                    console.log("Texto después del primer ':' en span:", description);
+                                }
+
+                                // Buscar todas las coincidencias
+                                const matches = text.match(regex);
+
+                                // Imprimir los resultados
+                                if (matches) {
+                                    console.log("Coincidencias encontradas:");
+                                    matches.forEach(criteria => {
+                                        console.log(criteria);
+
+                                        results.push({
+                                            "criterias": criteria,
+                                            "outcome": outcome,
+                                            description,
+                                            xpath: 'path-',
+                                            html: '',
+                                            "documentation": ''
+                                        });
+
+                                    });
+                                } else {
+                                    console.log("No se encontraron coincidencias.");
+                                }
+                            });
+                        }                     
+                        //console.log("Texto del elemento li:", li.textContent.trim());
+                    });
+                }
+               
+            });
+            
+            console.log(results);
+            let i = 0;
+            for (const result of results){
+                if(result.outcome === "earl:passed"){
+                    await this.#jsonld.addNewAssertion(result.criterias, result.outcome, result.description, webPage.url);
+                }else{
+                    i = i+1;
+                    console.log(result);
+                    await this.#jsonld.addNewAssertion(result.criterias, result.outcome, result.description, webPage.url, result.xpath + i, result.html, result.documentation);
+                }
+            }
+
+        });
+
+    }
+
+
 
 }
 
