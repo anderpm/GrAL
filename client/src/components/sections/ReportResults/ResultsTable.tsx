@@ -528,7 +528,7 @@ function CriteriaResults({criteria}:any){
     return(<>
         {criteria.hasPart.map((result:any, index:any) => (<>
 
-            {result.webPage === "https://www.ehu.eus/es/home" && (<>
+            {/* {result.webPage === "https://www.euskadi.eus/diccionario-elhuyar/" && (<> */}
                 <tr 
                     className="collapsible criteriaResult" 
                     onClick={
@@ -666,7 +666,7 @@ function CriteriaResults({criteria}:any){
                     )}
                     
                 </>)}
-            </>)}
+            {/* </>)} */}
             
             
 
