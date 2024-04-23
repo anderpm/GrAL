@@ -1,0 +1,458 @@
+[
+	{
+		"Type": "Error",
+		"ErrorsAlerts": [
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_link_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_spacer_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_input_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_area_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_map_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/longdesc_invalid.svg",
+				"Standards&Guidelines": [
+					"1.1.1"	
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_empty.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_multiple.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/aria_reference_broken.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"4.1.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/aria_menu_broken.svg",
+				"Standards&Guidelines": [
+					"2.1.1",
+					"4.1.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/title_invalid.svg",
+				"Standards&Guidelines": [
+					"2.4.2"	
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/language_missing.svg",
+				"Standards&Guidelines": [
+					"3.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/meta_refresh.svg",
+				"Standards&Guidelines": [
+					"2.2.1",
+					"2.2.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_empty.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.1",
+					"2.4.6"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/button_empty.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_empty.svg",
+				"Standards&Guidelines": [
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_skip_broken.svg",
+				"Standards&Guidelines": [
+					"2.1.1",
+					"2.4.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/th_empty.svg",
+				"Standards&Guidelines": [
+					"1.3.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/blink.svg",
+				"Standards&Guidelines": [
+					"2.2.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/marquee.svg",
+				"Standards&Guidelines": [
+					"2.2.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/contrast.svg",
+				"Standards&Guidelines": [
+					"1.4.3"
+				]
+			}
+		]
+	},
+	{
+		"Type": "Alert",
+		"ErrorsAlerts": [	
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_suspicious.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_redundant.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_duplicate.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_long.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/longdesc.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/image_title.svg",
+				"Standards&Guidelines": [
+					"1.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_orphaned.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_title.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/select_missing_label.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/fieldset_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/legend_missing.svg",
+				"Standards&Guidelines": [
+					"1.1.1",
+					"1.3.1",
+					"2.4.6",
+					"3.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_missing.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.6"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/h1_missing.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.6"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/region_missing.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_skipped.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.1",
+					"2.4.6"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_possible.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"2.4.1",
+					"2.4.6"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/table_layout.svg",
+				"Standards&Guidelines": [
+					"1.3.1",
+					"1.3.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/table_caption_possible.svg",
+				"Standards&Guidelines": [
+					"1.3.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/list_possible.svg",
+				"Standards&Guidelines": [
+					"1.3.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_internal_broken.svg",
+				"Standards&Guidelines": [
+					"2.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_suspicious.svg",
+				"Standards&Guidelines": [
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_redundant.svg",
+				"Standards&Guidelines": [
+					"2.4.4"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_word.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_excel.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_powerpoint.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_pdf.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_document.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/audio_video.svg",
+				"Standards&Guidelines": [
+					"1.2.1",
+					"1.2.2",
+					"1.2.3",
+					"1.2.5",
+					"1.4.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/html5_video_audio.svg",
+				"Standards&Guidelines": [
+					 "1.2.1",
+					"1.2.2",
+					"1.2.3",
+					"1.2.5",
+					"1.4.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/youtube_video.svg",
+				"Standards&Guidelines": [
+					"1.2.1",
+					"1.2.2",
+					"1.2.3"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/flash.svg",
+				"Standards&Guidelines": [
+					"1.2.1",
+					"1.2.2",
+					"1.2.3",
+					"1.2.5",
+					"2.1.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/applet.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/plugin.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/noscript.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/event_handler.svg",
+				"Standards&Guidelines": [
+					"2.1.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/javascript_jumpmenu.svg",
+				"Standards&Guidelines": [
+					"2.1.1",
+					"3.2.2"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/accesskey.svg",
+				"Standards&Guidelines": [
+					"2.4.1"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/tabindex.svg",
+				"Standards&Guidelines": [
+					"2.4.3"
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/text_small.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/text_justified.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/underline.svg",
+				"Standards&Guidelines": [
+					
+				]
+			},
+			{
+				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/title_redundant.svg",
+				"Standards&Guidelines": [
+					
+				]
+			}
+		]
+	}
+]
