@@ -30,7 +30,7 @@ class Scraper {
     */
     constructor(evaluator, jsonLd){
 
-        if (!['am', 'ac', 'mv', 'a11y', 'pa', 'lh', 'tv'].includes(evaluator)) {
+        if (!['am', 'ac', 'mv', 'a11y', 'pa', 'lh', 'wv', 'tv'].includes(evaluator)) {
             throw new Error(evaluator.toUpperCase() + " is not a valid evaluator !!!");
         }
 
@@ -850,6 +850,127 @@ class Scraper {
                 await this.#jsonld.addNewAssertion(criteria[audit.id], outcome, description, webPage.url, null, null, documentation);
             } 
         }
+    }
+
+
+
+    /**
+     * Scrapes results from the Wave evaluator and loads them into the jsonLd..
+     * @async
+     * @function wvScraper
+     * @param {object} webPage - The web page object to scrape.
+     * @param {object} page - The Puppeteer page object to use for web scraping.
+     * @returns {void}
+     */
+    async wvScraper(webPage, page){
+        
+        const currentFilePath = __filename;
+        const projectPath = currentFilePath.substring(0, currentFilePath.indexOf('\\server\\scraping\\scraper.js'));
+
+        const desktopPath = path.join(os.homedir(), 'Desktop');
+ 
+        const { execSync } = require('child_process');
+        execSync('"' + projectPath + '\\server\\sikulix\\sikulixide-2.0.5.jar" -r "'+ projectPath + '\\server\\sikulix\\wave.sikuli" --args ' + webPage.url + ' ');
+
+
+        // Read the content of the HTML file
+        const htmlContent = fs.readFileSync(desktopPath + '\\wave.html', 'utf-8');
+        // Create a virtual DOM using JSDOM
+        const dom = new JSDOM(htmlContent);
+        // Access the document
+        const document = dom.window.document;
+
+        // Function to find elements containing data-reportxpath
+        function findElementsWithReportXpath(element, elements) {
+            // Checks if the current element has the data-reportxpath attribute
+            if (element.getAttribute && element.getAttribute('data-reportxpath')) {
+                elements.push(element);
+            }
+        
+            // Loop through the children of the current element
+            for (let i = 0; i < element.children.length; i++) {
+                findElementsWithReportXpath(element.children[i], elements);
+            }
+        }
+        
+        const wave5code = document.getElementById('wave5code');
+        const elementsWithReportXpath = [];
+        
+        // Call the function to find the elements with data-reportxpath
+        findElementsWithReportXpath(wave5code, elementsWithReportXpath);
+        
+        let data;
+        try {
+            data = fs.readFileSync('..\\server\\errors&alerts.json', 'utf8');
+        } catch (error) {
+            console.error('Error reading errors&alerts.json file');
+        }
+        const jsonData = JSON.parse(data);
+
+        const results = [];
+        for (const elementWithReportXpath of elementsWithReportXpath) {
+            const img = elementWithReportXpath.querySelector('img');
+            const src = img.getAttribute('src');
+            const startIndex = src.indexOf("img/");
+            const extractedString = src.substring(startIndex); // Extract the part of the URL starting with "img/"
+
+            let outcome = "";
+            for(let i=0; i<2; i++){
+                if(i == 0){
+                    outcome = "earl:failed";
+                }else if(i == 1){
+                    outcome = "earl:cantTell";
+                }
+
+                jsonData[i].ErrorsAlerts.forEach(element => {
+                    
+                    const originalErrorAlert = element['Error&Alert'];
+                    const modifiedErrorAlert = originalErrorAlert.replace('chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/', '');
+                    
+                    if (modifiedErrorAlert === extractedString) {
+
+                        const span = elementWithReportXpath.querySelector('span');
+                        const spanText = span.textContent.trim();
+
+                        const htmlStartIndex = spanText.indexOf('<');
+                        const htmlEndIndex = spanText.indexOf('>', htmlStartIndex);
+
+                        if (htmlStartIndex !== -1 && htmlEndIndex !== -1) {
+                            const desiredText = spanText.substring(htmlStartIndex + 1, htmlEndIndex);
+                            const htmlText = '<' + desiredText + '>';
+
+                            const description = element['Description'];
+                            const documentation = "docPrueba";
+
+                            results.push({
+                                "criterias": element['Standards&Guidelines'],
+                                "outcome": outcome,
+                                description,
+                                xpath: 'path-',
+                                html: htmlText,
+                                "documentation": documentation
+                            });
+                        }
+
+                    }
+
+                });
+            } 
+        }
+
+
+        let i = 0;
+        for (const result of results){
+            /* if(result.outcome === "earl:passed"){
+                await this.#jsonld.addNewAssertion(result.criterias, result.outcome, result.description, webPage.url);
+            }else{ */
+                for (const criteria of result.criterias){
+                    i = i+1;
+                    await this.#jsonld.addNewAssertion(criteria, result.outcome, result.description, webPage.url, result.xpath + i, result.html, result.documentation);
+                }
+            /* } */
+        }
+
     }
 
 
