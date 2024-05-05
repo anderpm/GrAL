@@ -6,46 +6,53 @@
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_missing.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "Image alternative text is not present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_link_missing.svg",
 				"Standards&Guidelines": [
 					"1.1.1",
 					"2.4.4"
-				]
+				],
+				"Description": "An image without alternative text results in an empty link"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_spacer_missing.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "A layout spacer image (which should have null/empty alternative text) does not have an alt attribute"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_input_missing.svg",
 				"Standards&Guidelines": [
 					"1.1.1",
 					"2.4.4"
-				]
+				],
+				"Description": "Alternative text is not present for a form image button"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_area_missing.svg",
 				"Standards&Guidelines": [
 					"1.1.1",
 					"2.4.4"
-				]
+				],
+				"Description": "Alternative text is not present for an image map area (hot spot)"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_map_missing.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "An image that has hot spots does not have an alt attribute"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/longdesc_invalid.svg",
 				"Standards&Guidelines": [
 					"1.1.1"	
-				]
+				],
+				"Description": "The longdesc attribute is not a URL"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_missing.svg",
@@ -54,7 +61,8 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A form control does not have a corresponding label"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_empty.svg",
@@ -63,7 +71,8 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A form label is present, but does not contain any content"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_multiple.svg",
@@ -72,40 +81,46 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A form control has more than one label associated with it"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/aria_reference_broken.svg",
 				"Standards&Guidelines": [
 					"1.3.1",
 					"4.1.2"
-				]
+				],
+				"Description": "An aria-labelledby or aria-describedby reference exists, but the target for the reference does not exist"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/aria_menu_broken.svg",
 				"Standards&Guidelines": [
 					"2.1.1",
 					"4.1.2"
-				]
+				],
+				"Description": "An ARIA menu does not contain required menu items"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/title_invalid.svg",
 				"Standards&Guidelines": [
 					"2.4.2"	
-				]
+				],
+				"Description": "The page title is missing or not descriptive"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/language_missing.svg",
 				"Standards&Guidelines": [
 					"3.1.1"
-				]
+				],
+				"Description": "The language of the document is not identified or a lang attribute value is invalid"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/meta_refresh.svg",
 				"Standards&Guidelines": [
 					"2.2.1",
 					"2.2.2"
-				]
+				],
+				"Description": "The page is set to automatically change location or refresh using a <meta> tag"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_empty.svg",
@@ -113,51 +128,59 @@
 					"1.3.1",
 					"2.4.1",
 					"2.4.6"
-				]
+				],
+				"Description": "A heading contains no content"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/button_empty.svg",
 				"Standards&Guidelines": [
 					"1.1.1",
 					"2.4.4"
-				]
+				],
+				"Description": "A button is empty or has no value text"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_empty.svg",
 				"Standards&Guidelines": [
 					"2.4.4"
-				]
+				],
+				"Description": "A link contains no text"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_skip_broken.svg",
 				"Standards&Guidelines": [
 					"2.1.1",
 					"2.4.1"
-				]
+				],
+				"Description": "A skip navigation link exists, but the target for the link does not exist or the link is not keyboard accessible"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/th_empty.svg",
 				"Standards&Guidelines": [
 					"1.3.1"
-				]
+				],
+				"Description": "A <th> (table header) contains no text"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/blink.svg",
 				"Standards&Guidelines": [
 					"2.2.2"
-				]
+				],
+				"Description": "Blinking content is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/marquee.svg",
 				"Standards&Guidelines": [
 					"2.2.2"
-				]
+				],
+				"Description": "A <marquee> element is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/contrast.svg",
 				"Standards&Guidelines": [
 					"1.4.3"
-				]
+				],
+				"Description": "Very low contrast between text and background colors"
 			}
 		]
 	},
@@ -168,37 +191,43 @@
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_suspicious.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "Alternative text is likely insufficient or contains extraneous information"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_redundant.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "The alternative text for an image is the same as nearby or adjacent text"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_duplicate.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "Two images near each other have the same alternative text"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/alt_long.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "An image has very long alternative text"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/longdesc.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "The longdesc attribute is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/image_title.svg",
 				"Standards&Guidelines": [
 					"1.1.1"
-				]
+				],
+				"Description": "An image has a title attribute value but no alt value"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_orphaned.svg",
@@ -207,7 +236,8 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A form label is present, but it is not correctly associated with a form control"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/label_title.svg",
@@ -216,7 +246,8 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A form control does not have a label, but has a title"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/select_missing_label.svg",
@@ -224,7 +255,8 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A select element does not have an associated label"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/fieldset_missing.svg",
@@ -233,7 +265,8 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A group of check boxes or radio buttons is not enclosed in a fieldset"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/legend_missing.svg",
@@ -242,28 +275,32 @@
 					"1.3.1",
 					"2.4.6",
 					"3.3.2"
-				]
+				],
+				"Description": "A fieldset does not have a legend"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_missing.svg",
 				"Standards&Guidelines": [
 					"1.3.1",
 					"2.4.6"
-				]
+				],
+				"Description": "The page has no headings"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/h1_missing.svg",
 				"Standards&Guidelines": [
 					"1.3.1",
 					"2.4.6"
-				]
+				],
+				"Description": "A page does not have a first level heading"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/region_missing.svg",
 				"Standards&Guidelines": [
 					"1.3.1",
 					"2.4.1"
-				]
+				],
+				"Description": "No page regions or ARIA landmarks were found"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_skipped.svg",
@@ -271,7 +308,8 @@
 					"1.3.1",
 					"2.4.1",
 					"2.4.6"
-				]
+				],
+				"Description": "A heading level is skipped"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/heading_possible.svg",
@@ -279,74 +317,86 @@
 					"1.3.1",
 					"2.4.1",
 					"2.4.6"
-				]
+				],
+				"Description": "Text appears to be a heading but is not a heading element"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/table_layout.svg",
 				"Standards&Guidelines": [
 					"1.3.1",
 					"1.3.2"
-				]
+				],
+				"Description": "A layout table is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/table_caption_possible.svg",
 				"Standards&Guidelines": [
 					"1.3.1"
-				]
+				],
+				"Description": "Text appears to be a table caption, but is not a caption element"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/list_possible.svg",
 				"Standards&Guidelines": [
 					"1.3.1"
-				]
+				],
+				"Description": "Text is structured like a list but lacks proper list semantics"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_internal_broken.svg",
 				"Standards&Guidelines": [
 					"2.1.1"
-				]
+				],
+				"Description": "A link to another location within the page is present but does not have a corresponding target"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_suspicious.svg",
 				"Standards&Guidelines": [
 					"2.4.4"
-				]
+				],
+				"Description": "Link text contains extraneous text or may not make sense out of context"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_redundant.svg",
 				"Standards&Guidelines": [
 					"2.4.4"
-				]
+				],
+				"Description": "Adjacent links go to the same URL"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_word.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A link to a Microsoft Word document is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_excel.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A link to a Microsoft Excel spreadsheet is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_powerpoint.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A link to a Microsoft PowerPoint presentation is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_pdf.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A link to a PDF document is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/link_document.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A link to a non-HTML document is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/audio_video.svg",
@@ -356,7 +406,8 @@
 					"1.2.3",
 					"1.2.5",
 					"1.4.2"
-				]
+				],
+				"Description": "A link to a non-HTML document is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/html5_video_audio.svg",
@@ -366,7 +417,8 @@
 					"1.2.3",
 					"1.2.5",
 					"1.4.2"
-				]
+				],
+				"Description": "A <video> or <audio> element is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/youtube_video.svg",
@@ -374,7 +426,8 @@
 					"1.2.1",
 					"1.2.2",
 					"1.2.3"
-				]
+				],
+				"Description": "An embedded or linked YouTube video is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/flash.svg",
@@ -384,74 +437,86 @@
 					"1.2.3",
 					"1.2.5",
 					"2.1.2"
-				]
+				],
+				"Description": "Flash content is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/applet.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A Java applet is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/plugin.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "An unidentified plugin is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/noscript.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "A <noscript> element is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/event_handler.svg",
 				"Standards&Guidelines": [
 					"2.1.1"
-				]
+				],
+				"Description": "An event handler is present that may not be accessible"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/javascript_jumpmenu.svg",
 				"Standards&Guidelines": [
 					"2.1.1",
 					"3.2.2"
-				]
+				],
+				"Description": "A JavaScript jump menu may be present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/accesskey.svg",
 				"Standards&Guidelines": [
 					"2.4.1"
-				]
+				],
+				"Description": "An accesskey attribute is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/tabindex.svg",
 				"Standards&Guidelines": [
 					"2.4.3"
-				]
+				],
+				"Description": "A positive tabindex value is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/text_small.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "Text is very small"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/text_justified.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "Fully justified text is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/underline.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "Underlined text is present"
 			},
 			{
 				"Error&Alert": "chrome-extension://jbbplnpkjmmeebjpijfedlgcdilocofh/img/icons/title_redundant.svg",
 				"Standards&Guidelines": [
 					
-				]
+				],
+				"Description": "Title attribute text is the same as text or alternative text"
 			}
 		]
 	}
