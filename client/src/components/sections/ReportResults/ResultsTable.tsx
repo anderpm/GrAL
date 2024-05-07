@@ -94,7 +94,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
      * @returns {JSX.Element|null} - JSX element representing the ResultsTable component.
      */
     return(<>
-        {localStorage.getItem("scope")?.includes(window.location.href) && (<>
+        {/* {localStorage.getItem("scope")?.includes(window.location.href) && (<> */}
             <p>Current webpage evaluation results:</p>
             <div id="resultsTable">
                 <table>
@@ -132,7 +132,7 @@ export default function ResultsTable({conformanceLevels}:any): JSX.Element {
                     </tbody>
                 </table>
             </div>
-        </>)}
+        {/* </>)} */}
     </>);
     
 }

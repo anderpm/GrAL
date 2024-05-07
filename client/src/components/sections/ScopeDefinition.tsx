@@ -12,7 +12,8 @@ import deleteI from '../../images/delete.png';
 
 
 
-const defaultScope = [{name: window.document.title, url: window.location.href}];
+// const defaultScope = [{name: window.document.title, url: window.location.href}];
+const defaultScope = [{name: "Noticias de Gipuzkoa", url: "https://www.noticiasdegipuzkoa.eus/"}];
 const defaultNewWebPage = { name: "", url: "" };
 
 
