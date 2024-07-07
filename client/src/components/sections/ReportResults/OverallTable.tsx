@@ -180,7 +180,7 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
      */
     return(<>
         {/* {localStorage.getItem("scope")?.includes(window.location.href) && (<> */}
-            <p>Current webpage evaluation results:</p> 
+            {/* <p>Current webpage evaluation results:</p> */} 
             <div id="overallTable">
                 <table>
                     <thead>
