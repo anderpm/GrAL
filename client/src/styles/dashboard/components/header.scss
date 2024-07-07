@@ -1,0 +1,31 @@
+@import '../../colors';
+
+.header{
+    display: flex;
+    padding-inline: 10px;
+    height: 100px;
+    /* background-color: $primary-color; */
+    background-color: lightgray;
+    align-items: center;
+    justify-content: space-between;
+
+
+    & .left{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        & .logo {
+            height: 60px;
+            width: 60px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    }
+
+    & .right{
+        display: flex;
+        align-items: center;
+    }
+}
+
