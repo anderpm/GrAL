@@ -1,0 +1,72 @@
+@import '../../../colors';
+
+.define-scope {
+    h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+}
+
+#extensionScopeInputList {
+
+    & .scopeInput {
+        margin-bottom: 10px;
+
+        & .inputWrapper {
+
+            & span {
+                cursor: pointer;
+                color: $primary-color;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            & .icon {
+                position: static;
+                margin-left: 8px;
+                height: 20px;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+
+                &.edit:hover {
+                    filter: drop-shadow(0 0 1px $primary-color) brightness(1.1);
+                }
+
+                &.delete:hover {
+                    filter: drop-shadow(0 0 1px $red-color) brightness(1.1);
+                }
+            }
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+    & .W3Report {
+        margin-top: 10px;
+        display: block;
+        background-color: $primary-color;
+        padding: 6px 9px;
+        border: 2px solid $primary-color;
+        border-radius: 6px;
+        color: $secondary-color;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $intermediate-color;
+            color: $secondary-color;
+            font-style: italic;
+        }
+
+        & input {
+            display: none;
+        }
+    }
+}
