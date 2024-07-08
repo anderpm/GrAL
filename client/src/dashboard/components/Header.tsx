@@ -27,7 +27,7 @@ export default function Header ({authenticationState, setAuthenticationState}:an
                     src={icon128} 
                     onClick={() => window.open("https://github.com/anderpm/GrAL", '_blank')} 
                 />
-                <h1>Earler dashboard</h1>
+                <h1>Web Accessibility Aggregator</h1>
             </div>
             
             <div className='right'>
