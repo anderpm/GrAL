@@ -29,6 +29,7 @@ export default function DefineScope(): JSX.Element {
 	const [scope, setScope] = useState(defaultScope);
 	const [newWebPage, setNewWebPage] = useState(defaultNewWebPage);
 	const [editItemIndex, setEditItemIndex] = useState(-1);
+	const [conformanceLevels, setConformanceLevels] = useState(['A', 'AA']);
 
 	useEffect(() => {
 		const storedScope = localStorage.getItem("scope");
@@ -40,6 +41,13 @@ export default function DefineScope(): JSX.Element {
 	useEffect(() => {
 		localStorage.setItem("scope", JSON.stringify(scope));
 	}, [scope]);
+
+	useEffect(() => {
+		const storedConformanceLevels = localStorage.getItem("conformanceLevels");
+		if (storedConformanceLevels) {
+			setConformanceLevels(JSON.parse(storedConformanceLevels));
+		}
+	}, []);
 
 	/**
 	 * Adds a new web page item to the scope list.
@@ -87,10 +95,15 @@ export default function DefineScope(): JSX.Element {
 		setScope(newScope.length === 0 ? defaultScope : newScope);
 	};
 
+	const handleLevelClick = (level: any) => {
+		const levels = level === 'A' ? ['A'] : (level === 'AA' ? ['A', 'AA'] : ['A', 'AA', 'AAA']);
+		setConformanceLevels(levels);
+		localStorage.setItem("conformanceLevels", JSON.stringify(levels));
+	};
 
 	return (
 		<div className="define-scope">
-			<h2>Evaluation Scope</h2>
+			<h2>Define Scope</h2>
 
 			<ul id="extensionScopeInputList">
 				{scope.map((webPage: any, index: any) => (
@@ -165,6 +178,21 @@ export default function DefineScope(): JSX.Element {
 					<input type="file" accept=".json" onChange={(event: any) => uploadNewReport(event)} />
 					Import W3Report
 				</label>
+			</div>
+
+			<div id="conformanceLevelSelector">
+				<p>Select conformance level:</p>
+				<div className="level-container">
+					{["A", "AA", "AAA"].map((level: any) => (
+						<div
+							key={level}
+							className={`conformanceLevels ${conformanceLevels.includes(level) ? 'selected' : ''}`}
+							onClick={() => handleLevelClick(level)}
+						>
+							{level}
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);

@@ -6,44 +6,6 @@
         margin-bottom: 1rem;
     }
 
-    #conformanceLevelSelector {
-        align-items: center;
-        text-align: center;
-
-        & .level-container {
-            margin-bottom: 15px;
-            border: 2px solid $primary-color;
-            background-color: $primary-color;
-            border-radius: 6px;
-            overflow: hidden;
-            display: inline-block;
-
-            & .conformanceLevels {
-                display: inline-flex;
-                padding: 6px 9px;
-                border: none;
-                cursor: pointer;
-                font-size: 12px;
-                background-color: $secondary-color;
-                color: $primary-color;
-                font-style: italic;
-
-                &.selected {
-                    background-color: $primary-color;
-                    color: $secondary-color;
-                    font-style: normal;
-                }
-
-                &:hover {
-                    background-color: $intermediate-color;
-                    color: $secondary-color;
-                    font-style: italic;
-                }
-
-            }
-        }
-    }
-
     .page-div {
         display: flex;
         width: 900px;

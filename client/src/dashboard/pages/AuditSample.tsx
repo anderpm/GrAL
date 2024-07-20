@@ -81,37 +81,12 @@ export default function EvaluatorSelection(): JSX.Element {
         })
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("conformanceLevels", JSON.stringify(conformanceLevels));
-    }, [conformanceLevels]);
-
-    /**
-     * Handles the click event on a conformance level.
-     * @param {string} level - The selected conformance level.
-     */
-    function handleLevelClick(level: any) {
-        const levels = level === 'A' ? ['A'] : (level === 'AA' ? ['A', 'AA'] : ['A', 'AA', 'AAA']);
-        setConformanceLevels(levels);
-    };
 
     return (
         <div className="audit-sample">
             <h2>Audit Sample</h2>
             <div className="page-div">
                 <div className='row'>
-                    <div id="conformanceLevelSelector">
-                        <p>Select conformace level:</p>
-                        <div className="level-container">
-                            {["A", "AA", "AAA"].map((level: any) => (
-                                <div
-                                    className={`conformanceLevels ${conformanceLevels.includes(level) ? 'selected' : ''}`}
-                                    onClick={() => handleLevelClick(level)}
-                                >
-                                    {level}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                     <SummaryTable conformanceLevels={conformanceLevels}></SummaryTable>
                 </div>
                 <div className='tables'>
