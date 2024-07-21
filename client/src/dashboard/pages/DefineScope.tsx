@@ -12,6 +12,8 @@ import edit from '../../images/edit.png';
 import deleteI from '../../images/delete.png';
 import { uploadNewReport } from '../../scripts/reportLoadingOptions.js';
 
+import extendedArrow from '../../images/extendedArrow.png';
+import contractedArrow from '../../images/contractedArrow.png';
 
 
 
@@ -30,6 +32,7 @@ export default function DefineScope(): JSX.Element {
 	const [newWebPage, setNewWebPage] = useState(defaultNewWebPage);
 	const [editItemIndex, setEditItemIndex] = useState(-1);
 	const [conformanceLevels, setConformanceLevels] = useState(['A', 'AA']);
+	const [dropdownOpen, setDropdownOpen] = useState(false);
 
 	useEffect(() => {
 		const storedScope = localStorage.getItem("scope");
@@ -180,18 +183,37 @@ export default function DefineScope(): JSX.Element {
 				</label>
 			</div>
 
-			<div id="conformanceLevelSelector">
-				<p>Select conformance level:</p>
-				<div className="level-container">
-					{["A", "AA", "AAA"].map((level: any) => (
-						<div
-							key={level}
-							className={`conformanceLevels ${conformanceLevels.includes(level) ? 'selected' : ''}`}
-							onClick={() => handleLevelClick(level)}
-						>
-							{level}
+			<div className="alignment-container">
+				<div id="conformanceLevelSelector">
+					<p>Select conformance level:</p>
+					<div className="level-container">
+						{["A", "AA", "AAA"].map((level: any) => (
+							<div
+								key={level}
+								className={`conformanceLevels ${conformanceLevels.includes(level) ? 'selected' : ''}`}
+								onClick={() => handleLevelClick(level)}
+							>
+								{level}
+							</div>
+						))}
+					</div>
+				</div>
+				<div className='dropdownBtn'>
+					<p>Select conformance level:</p>
+					<div
+						className={`dropdownHead${dropdownOpen ? " active" : ""}`}
+						onClick={() => setDropdownOpen(!dropdownOpen)}
+					>
+						<label>WCAG Version</label>
+						<img src={dropdownOpen ? extendedArrow : contractedArrow} alt="dropdown_arrow" />
+					</div>
+					{dropdownOpen && (
+						<div className='dropdownBody'>
+							<label>
+								WCAG 2.1
+							</label>
 						</div>
-					))}
+					)}
 				</div>
 			</div>
 		</div>
