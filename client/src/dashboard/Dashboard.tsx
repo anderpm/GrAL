@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import DefineScope from './pages/DefineScope';
 import SelectSample from './pages/SelectSample';
 import AuditSample from './pages/AuditSample';
+import Overview from './pages/Overview';
 
 export default function Dashboard(): JSX.Element {
 
@@ -35,6 +36,9 @@ export default function Dashboard(): JSX.Element {
 				<div className="container">
 					<Navbar onMenuSelect={setSelectedMenu}></Navbar>
 					<div className='menu'>
+						{selectedMenu === "Overview" && (<>
+							<Overview onMenuSelect={setSelectedMenu}></Overview>
+						</>)}
 						{selectedMenu === "Define Scope" && (<>
 							<DefineScope></DefineScope>
 						</>)}
@@ -43,7 +47,7 @@ export default function Dashboard(): JSX.Element {
 						</>)}
 						{selectedMenu === "Audit Sample" && (<>
 							<AuditSample></AuditSample>
-						</>)}	
+						</>)}
 					</div>
 				</div>
 			</>)}
