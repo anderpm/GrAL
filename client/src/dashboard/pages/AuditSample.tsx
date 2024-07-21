@@ -10,6 +10,8 @@ import OverallTable from '../../components/sections/ReportResults/OverallTable';
 import SummaryTable from '../../components/sections/ReportResults/SummaryTable';
 import ResultsTable from '../../components/sections/ReportResults/ResultsTable';
 import { getFromChromeStorage } from '../../scripts/utils/chromeUtils';
+import Button from '../../components/reusables/Button';
+import { evaluateScope } from '../../scripts/reportLoadingOptions.js';
 
 const defaultCheckboxes = [
     { checked: false, label: "AccessMonitor - Website", href: "https://accessmonitor.acessibilidade.gov.pt/" },
@@ -31,11 +33,9 @@ const defaultCheckboxes = [
 export default function EvaluatorSelection(): JSX.Element {
 
     const [checkboxes, setCheckboxes] = useState(defaultCheckboxes);
-
     const [conformanceLevels, setConformanceLevels] = useState(['A', 'AA']);
-
     const [reportIsLoaded, setReportIsLoaded] = useState("false");
-
+    const [animateBtn, setAnimateBtn] = useState("none");
 
     /**
      * useEffect hook that sets the state of checkboxes based on the values stored in localStorage.
@@ -85,7 +85,36 @@ export default function EvaluatorSelection(): JSX.Element {
     return (
         <div className="audit-sample">
             <h2>Audit Sample</h2>
+
+            <p className='sep'>Select Evaluators:</p>
             <div className="page-div">
+                <div className="checkboxes">
+                    {checkboxes.map((checkbox: any, index: any) => (
+                        <div className="checkbox-wrapper" key={index}>
+                            <div className="checkbox">
+                                <input
+                                    type="checkbox"
+                                    checked={checkbox.checked}
+                                    onChange={() => handleCheckboxChange(index)}
+                                    className={checkbox.checked ? "checked" : ""}
+                                />
+                                <span onClick={() => { window.open(checkbox.href, '_blank'); }}>
+                                    {checkbox.label}
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className='ev-button'>
+                    <Button
+                        classList={"primary br"}
+                        onClickHandler={() => { evaluateScope(setAnimateBtn) }}
+                        innerText={"Evaluate selected scope"}
+                        isLoading={animateBtn !== "none"}
+                        animate={animateBtn === "evaluate"}
+                    />
+                </div>
+
                 <div className='row'>
                     <SummaryTable conformanceLevels={conformanceLevels}></SummaryTable>
                 </div>

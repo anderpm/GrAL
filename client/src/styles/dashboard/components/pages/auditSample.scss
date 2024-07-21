@@ -6,12 +6,98 @@
         margin-bottom: 1rem;
     }
 
+    .sep {
+        text-align: center;
+        margin-top: 20px;
+    }
+
     .page-div {
         display: flex;
         width: 900px;
         flex-direction: column;
         align-items: center;
         text-align: center;
+
+        .checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 500px;
+        }
+
+        .checkbox-wrapper {
+            width: calc(50% - 10px);
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            margin: 0;
+            border: none;
+
+            &:first-of-type {
+                padding-top: 0;
+            }
+
+            &:last-of-type {
+                padding-bottom: 0;
+            }
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            border: none;
+
+            input[type="checkbox"] {
+                margin: 0;
+                padding: 0;
+                -webkit-appearance: none;
+                appearance: none;
+                width: 1.3em;
+                height: 1.3em;
+                border-radius: 0.15em;
+                border: 0.1em solid $primary-color;
+                outline: none;
+                cursor: pointer;
+                display: inline-block;
+                filter: drop-shadow(0 0 0);
+                transition: 0.2s ease;
+
+                &.checked {
+                    background-color: $primary-color !important;
+                }
+
+                &.checked::before {
+                    content: "\2714";
+                    font-size: 1.1em;
+                    color: $secondary-color;
+                    position: relative;
+                    right: 1px;
+                    top: -2px;
+                }
+
+                &:hover {
+                    filter: drop-shadow(0 0 3px $primary-color);
+                    transition: 0.2s ease;
+                }
+            }
+
+            span {
+                cursor: pointer;
+                color: $primary-color;
+                margin-left: 10px;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        & .ev-button {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
 
         & .row {
             display: flex;
