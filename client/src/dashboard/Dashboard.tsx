@@ -15,7 +15,7 @@ import ExploreWebsite from './pages/ExploreWebsite';
 export default function Dashboard(): JSX.Element {
 
 	const [authenticationState, setAuthenticationState] = useState("notLogged");
-	const [selectedMenu, setSelectedMenu] = useState<string>("");
+	const [selectedMenu, setSelectedMenu] = useState<string>("Overview");
 
 	const onLogoutHandler = () => {
 		removeFromChromeStorage("authenticationState", true);
