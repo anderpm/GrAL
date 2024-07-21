@@ -10,6 +10,7 @@ import DefineScope from './pages/DefineScope';
 import SelectSample from './pages/SelectSample';
 import AuditSample from './pages/AuditSample';
 import Overview from './pages/Overview';
+import ExploreWebsite from './pages/ExploreWebsite';
 
 export default function Dashboard(): JSX.Element {
 
@@ -41,6 +42,9 @@ export default function Dashboard(): JSX.Element {
 						</>)}
 						{selectedMenu === "Define Scope" && (<>
 							<DefineScope></DefineScope>
+						</>)}
+						{selectedMenu === "Explore Website" && (<>
+							<ExploreWebsite></ExploreWebsite>
 						</>)}
 						{selectedMenu === "Select Sample" && (<>
 							<SelectSample></SelectSample>
