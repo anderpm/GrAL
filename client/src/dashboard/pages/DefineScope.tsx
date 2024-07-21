@@ -199,7 +199,7 @@ export default function DefineScope(): JSX.Element {
 					</div>
 				</div>
 				<div className='dropdownBtn'>
-					<p>Select conformance level:</p>
+					<p>Select WCAG Version:</p>
 					<div
 						className={`dropdownHead${dropdownOpen ? " active" : ""}`}
 						onClick={() => setDropdownOpen(!dropdownOpen)}
