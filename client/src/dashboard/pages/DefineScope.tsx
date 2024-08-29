@@ -55,10 +55,15 @@ export default function DefineScope(): JSX.Element {
 	/**
 	 * Adds a new web page item to the scope list.
 	 */
-	const handleAddItem = () => {
+	/* const handleAddItem = () => {
 		setNewWebPage(defaultNewWebPage);
 		setEditItemIndex(scope.length);
 		setScope([...scope, defaultNewWebPage]);
+	}; */
+	const handleAddItem = () => {
+		setNewWebPage(defaultNewWebPage);
+		setEditItemIndex(0);
+		setScope([defaultNewWebPage]);
 	};
 
 	/**
@@ -81,9 +86,12 @@ export default function DefineScope(): JSX.Element {
 			/* }else if(!newWebPage.url.includes(baseUrl)){
 			  alert("URL must start with: " + baseUrl); */
 		} else {
-			const newScope = [...scope];
+			/* const newScope = [...scope];
 			newScope[editItemIndex] = newWebPage;
 			setScope(newScope);
+			setEditItemIndex(-1); */
+			const newScope = [...scope];
+			setScope([newWebPage]);
 			setEditItemIndex(-1);
 		}
 	};
@@ -92,10 +100,14 @@ export default function DefineScope(): JSX.Element {
 	 * Deletes a web page item from the scope list.
 	 * @param {number} index - The index of the web page item to delete.
 	 */
-	const handleDeleteItem = (index: any) => {
+	/* const handleDeleteItem = (index: any) => {
 		const newScope = [...scope];
 		newScope.splice(index, 1);
 		setScope(newScope.length === 0 ? defaultScope : newScope);
+	}; */
+	const handleDeleteItem = (index: number) => {
+		setScope([defaultScope[0]]);
+		setEditItemIndex(-1);
 	};
 
 	const handleLevelClick = (level: any) => {
@@ -108,9 +120,9 @@ export default function DefineScope(): JSX.Element {
 		<div className="define-scope">
 			<h2>Define Scope</h2>
 
-			<ul id="extensionScopeInputList">
+			<div id="extensionScopeInputList">
 				{scope.map((webPage: any, index: any) => (
-					<li className="scopeInput" key={index}>
+					<div className="scopeInput" key={index}>
 						{editItemIndex === index ? (
 							<div className="inputWrapper">
 								<input
@@ -167,9 +179,9 @@ export default function DefineScope(): JSX.Element {
 									)}
 							</div>
 						)}
-					</li>
+					</div>
 				))}
-			</ul>
+			</div>
 
 			<div className='buttons'>
 				<Button
