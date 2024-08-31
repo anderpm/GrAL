@@ -50,8 +50,8 @@ $border-radius: 6px;
         /* Cambia a flex para mejorar la alineación */
         align-items: center;
         justify-content: center;
-        // height: $button-height;
-        height: 18px;
+        height: $button-height;
+        /* height: 18px; */
         padding: 0 10px;
         border: none;
         cursor: pointer;
