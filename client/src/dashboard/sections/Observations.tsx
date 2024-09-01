@@ -298,7 +298,7 @@ function CriteriaResults({ criteria }: any) {
             }`;
     };
 
-    const fetchObservation = async () => {
+    /* const fetchObservation = async () => {
         const normalizedKey = normalizeCriteria(criteria.criteria);
         // Load existing data from storage
         const data = await getFromChromeStorage(window.location.hostname + ".observationData", true);
@@ -307,13 +307,27 @@ function CriteriaResults({ criteria }: any) {
         // Find the corresponding observation
         const existingObservation = data2.find((item: any) => item.assertion === normalizedKey)?.observation || "";
         setObservation(existingObservation);
+    }; */
+
+    const fetchObservation = async () => {
+        const normalizedKey = normalizeCriteria(criteria.criteria);
+        // Load existing data from storage
+        const data = await getFromChromeStorage(window.location.hostname, false);
+        const data2 = JSON.parse(data);
+        const data3 = data2.auditSample;
+        
+        // Find the corresponding observation
+        const entry = data3.find((item: any) => item.test === normalizedKey);
+        const existingObservation = entry ? entry.result.description : "";
+
+        setObservation(existingObservation);
     };
 
     useEffect(() => {
         fetchObservation();
     }, [criteria]); // Depend on criteria so it refetches when it changes
 
-    const handleSaveClick = async () => {
+    /* const handleSaveClick = async () => {
         const normalizedKey = normalizeCriteria(criteria.criteria);
 
         // Load existing data from storage
@@ -321,27 +335,39 @@ function CriteriaResults({ criteria }: any) {
 
         const data2 = JSON.parse(data);
 
-        let found = false;
         for (let i = 0; i < data2.length; i++) {
-            console.log(data2)
-            console.log(normalizedKey)
             if (data2[i].assertion === normalizedKey) {
-                console.log("asdasd")
                 // Update existing observation
                 data2[i].observation = observation;
 
-                found = true;
                 break;
             }
         }
 
-        /* if (!found) {
-            // Add new observation if it does not exist
-            data2.push({ assertion: normalizedKey, observation: newValue });
-        } */
-
         // Save updated data to storage
         storeOnChromeStorage(window.location.hostname + ".observationData", data2);
+    }; */
+
+    const handleSaveClick = async () => {
+        const normalizedKey = normalizeCriteria(criteria.criteria);
+
+        // Load existing data from storage
+        const data = await getFromChromeStorage(window.location.hostname, false);
+
+        const data2 = JSON.parse(data);
+        const data3 = data2.auditSample;
+
+        for (let i = 0; i < data3.length; i++) {
+            if (data3[i].test === normalizedKey) {
+                // Update existing observation
+                data3[i].result.description = observation;
+
+                break;
+            }
+        }
+
+        // Save updated data to storage
+        storeOnChromeStorage(window.location.hostname, data2);
     };
 
 
