@@ -11,6 +11,7 @@ import SelectSample from './pages/SelectSample';
 import AuditSample from './pages/AuditSample';
 import Overview from './pages/Overview';
 import ExploreWebsite from './pages/ExploreWebsite';
+import ViewReport from './pages/ViewReport';
 
 export default function Dashboard(): JSX.Element {
 
@@ -51,6 +52,9 @@ export default function Dashboard(): JSX.Element {
 						</>)}
 						{selectedMenu === "Audit Sample" && (<>
 							<AuditSample></AuditSample>
+						</>)}
+						{selectedMenu === "View Report" && (<>
+							<ViewReport></ViewReport>
 						</>)}
 					</div>
 				</div>
