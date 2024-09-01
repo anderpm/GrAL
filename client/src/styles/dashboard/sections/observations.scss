@@ -1,0 +1,218 @@
+@import '../../colors';
+
+/* RESULTS TABLE */
+#resultsTable {
+    border: 2px solid $primary-color;
+    border-radius: 6px;
+    background-color: $primary-color;
+    overflow-y: auto;
+    max-height: 50vh;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
+    & table {
+        background-color: $secondary-color;
+        border-collapse: collapse;
+        width: 100%;
+
+        & img {
+            all: initial;
+            height: 18px;
+            display: inline;
+
+            &.arrow {
+                height: 24px;
+            }
+        }
+
+        & tr {
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+
+            & th {
+                padding: 6px 0;
+                width: 6%;
+                font-size: 13px;
+                text-align: center;
+                font-weight: 300;
+                cursor: default;
+                position: sticky;
+                top: 0px;
+                border-right: 1px solid $gray-borders;
+
+                &:first-of-type {
+                    width: 70%;
+                    border-right: none;
+                    background-color: $primary-color;
+                    color: $secondary-color;
+                }
+
+                &:last-of-type {
+                    border-right: none;
+                }
+            }
+
+            & td {
+                padding: 6px 0;
+                font-size: 12px;
+            }
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #005a6aaa;
+        border-radius: 50px;
+    }
+
+}
+
+
+#resultsTableContent {
+
+    & img {
+        cursor: pointer;
+    }
+
+    & .collapsible {
+        text-align: center;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        border: none;
+        border-top: 1px solid #c0c0c0;
+
+        & td {
+            border-left: 1px solid #c0c0c0;
+
+            &:first-of-type {
+                text-align: left;
+                padding-left: 6px;
+                border-left: none;
+            }
+        }
+
+        &.active {
+            background-color: $intermediate-color;
+        }
+    }
+
+    & .mainCategory {
+
+        border-top: 2px solid $primary-color;
+
+        & td {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        &:hover {
+            background-color: $intermediate-color;
+            font-style: italic;
+        }
+    }
+
+    & .subCategory {
+
+        border-top: 2px solid $gray-borders;
+        background-color: #e7e7e7;
+
+        & td {
+            font-size: 13px;
+        }
+
+        &:hover {
+            background-color: $intermediate-color;
+            font-style: italic;
+        }
+    }
+
+    & .criteriaResult {
+
+        & .editIcon {
+            margin-left: 6px;
+        }
+
+        & .removeIcon {
+            margin-left: 6px;
+        }
+
+    }
+
+    & .textInput {
+        width: 250px;
+        height: 100px;
+    }
+
+}
+
+tbody .blacklistIcon {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+tbody .blacklistIcon:hover {
+    filter: drop-shadow(0 0 1px red) brightness(1.1);
+}
+
+
+
+
+.codigo_analisis {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    background-color: #f4f4f4;
+    color: #d14;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #e1e1e8;
+    border-radius: 5px;
+}
+
+.highlightPopup {
+    width: 160px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+    background-color: #f4f4f4;
+    border: 2px solid #d14;
+}
+
+.highlightPopup span {
+    color: black;
+}
+
+.highlightPopup u {
+    color: #005a6a;
+    cursor: pointer;
+}
+
+.criteria-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    & .textarea-observation {
+        width: 80%;
+        height: 50px;
+    }
+}

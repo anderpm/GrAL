@@ -285,6 +285,17 @@ export async function mapReportData(evaluationreport = null, blackList = null){
 
     storeOnChromeStorage(window.location.hostname + ".reportIsLoaded", "true");
     //localStorage.setItem("scope", JSON.stringify(evaluationScope));
+
+    const observationData = [];
+    for (var i = 0; i < auditSample.length; i++){
+        const assertion = auditSample[i];
+        observationData.push({
+            "assertion": assertion.test,
+            "observation": ""
+        });
+    }
+    storeOnChromeStorage(window.location.hostname + ".observationData", observationData);
+    
     window.location.reload();
 
 }

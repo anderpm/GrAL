@@ -12,6 +12,7 @@ import ResultsTable from '../../components/sections/ReportResults/ResultsTable';
 import { getFromChromeStorage } from '../../scripts/utils/chromeUtils';
 import Button from '../../components/reusables/Button';
 import { evaluateScope } from '../../scripts/reportLoadingOptions.js';
+import Observations from '../sections/Observations';
 
 const defaultCheckboxes = [
     { checked: false, label: "AccessMonitor - Website", href: "https://accessmonitor.acessibilidade.gov.pt/" },
@@ -36,6 +37,7 @@ export default function EvaluatorSelection(): JSX.Element {
     const [conformanceLevels, setConformanceLevels] = useState(['A', 'AA']);
     const [reportIsLoaded, setReportIsLoaded] = useState("false");
     const [animateBtn, setAnimateBtn] = useState("none");
+    const [activeTab, setActiveTab] = useState('website');
 
     /**
      * useEffect hook that sets the state of checkboxes based on the values stored in localStorage.
@@ -115,13 +117,42 @@ export default function EvaluatorSelection(): JSX.Element {
                     />
                 </div>
 
-                <div className='row'>
-                    <SummaryTable conformanceLevels={conformanceLevels}></SummaryTable>
+                <div className="tabs">
+                    <div
+                        className={activeTab === 'tables' ? 'active' : ''}
+                        onClick={() => setActiveTab('tables')}
+                        style={{ width: "90px" }}
+                    >
+                        Tables
+                    </div>
+                    <div
+                        className={activeTab === 'observations' ? 'active' : ''}
+                        onClick={() => setActiveTab('observations')}
+                        style={{ width: "136px" }}
+                    >
+                        Observations
+                    </div>
                 </div>
-                <div className='tables'>
-                    <ResultsTable conformanceLevels={conformanceLevels}></ResultsTable>
-                    <OverallTable conformanceLevels={conformanceLevels}></OverallTable>
+
+                <div className="table">
+                    {activeTab === 'tables' && (<>
+                        <div className='row'>
+                            <SummaryTable conformanceLevels={conformanceLevels}></SummaryTable>
+                        </div>
+                        <div className='tables'>
+                            <ResultsTable conformanceLevels={conformanceLevels}></ResultsTable>
+                            <OverallTable conformanceLevels={conformanceLevels}></OverallTable>
+                        </div>
+                    </>)}
+
+                    {activeTab === 'observations' && (<>
+                        <p>Observations:</p>
+                        <div className='observations'>
+                            <Observations conformanceLevels={conformanceLevels}></Observations>
+                        </div>
+                    </>)}
                 </div>
+
             </div>
         </div>
     );
