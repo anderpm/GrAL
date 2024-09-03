@@ -11,7 +11,9 @@ const ViewReport = () => {
         <div className='exploreWebsite'>
             <h2>View Report</h2>
             <div className='resto'>
-                <Button className='button-export' classList="primary" onClickHandler={() => downloadLoadedReport()} innerText="Export Report"></Button>
+                <div className="button-container">
+                    <Button className='button-export' classList="primary" onClickHandler={() => downloadLoadedReport()} innerText="Export Report"></Button>
+                </div>
             </div>
         </div>
     );
