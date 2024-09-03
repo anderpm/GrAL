@@ -1,10 +1,12 @@
+@import '../../colors';
+
 .navbar {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #333;
+    background-color: lightgray;
     padding: 1rem;
-    color: white;
+    font-weight: bold;
 }
 
 .navbar-menu {
@@ -21,5 +23,9 @@
 }
 
 .navbar-item:hover {
-    text-decoration: underline;
+    color: $primary-color;
+}
+
+.navbar-item.selected {
+    color: $primary-color;
 }

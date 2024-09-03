@@ -1,16 +1,15 @@
 @import '../../colors';
 
-.header{
+.header {
     display: flex;
     padding-inline: 10px;
     height: 100px;
-    /* background-color: $primary-color; */
-    background-color: lightgray;
+    background-color: gray;
     align-items: center;
     justify-content: space-between;
 
 
-    & .left{
+    & .left {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -23,9 +22,8 @@
         }
     }
 
-    & .right{
+    & .right {
         display: flex;
         align-items: center;
     }
 }
-
