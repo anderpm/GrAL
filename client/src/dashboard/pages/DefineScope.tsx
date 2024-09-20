@@ -42,7 +42,21 @@ export default function DefineScope(): JSX.Element {
 	}, []);
 
 	useEffect(() => {
+		const isValidUrl = (url: string) => {
+			try {
+				new URL(url);
+				return true;
+			} catch (_) {
+				return false;
+			}
+		};
+
 		localStorage.setItem("scope", JSON.stringify(scope));
+
+		if (scope.length > 0 && isValidUrl(scope[0].url)) {
+			const baseUrl = new URL(scope[0].url).origin;
+			localStorage.setItem("baseUrl", baseUrl);
+		}
 	}, [scope]);
 
 	useEffect(() => {
@@ -93,6 +107,7 @@ export default function DefineScope(): JSX.Element {
 			const newScope = [...scope];
 			setScope([newWebPage]);
 			setEditItemIndex(-1);
+			localStorage.setItem("baseUrl", newWebPage.url);
 		}
 	};
 
