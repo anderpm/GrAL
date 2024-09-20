@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect} from "react";
 import '../../styles/dashboard/components/header.scss';
 import icon128 from '../../images/icon128.png';
+import WAA from '../../images/WAA.png';
 import Button from '../../components/reusables/Button';
 import { fetchServer } from '../../scripts/utils/moreUtils.js';
 import { getFromChromeStorage, removeFromChromeStorage, storeOnChromeStorage } from "../../scripts/utils/chromeUtils.js";
@@ -24,7 +25,7 @@ export default function Header ({authenticationState, setAuthenticationState}:an
                 <img 
                     className='logo'
                     alt="extension logo" 
-                    src={icon128} 
+                    src={WAA} 
                     onClick={() => window.open("https://github.com/anderpm/GrAL", '_blank')} 
                 />
                 <h1>Web Accessibility Aggregator</h1>
