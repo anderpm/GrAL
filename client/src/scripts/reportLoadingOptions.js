@@ -75,6 +75,9 @@ export async function downloadLoadedReport(){
     const getCurrentReport = await getFromChromeStorage(window.location.hostname, false);
     const currentReport = JSON.parse(getCurrentReport);
     const activeConformanceLevels = JSON.parse(localStorage.getItem("conformanceLevels"));
+    
+    /* const observationData = await getFromChromeStorage(window.location.hostname + ".observationData", true);
+    const observationDataJson = JSON.parse(observationData); */
 
     currentReport.evaluationScope.conformanceTarget = "wai:WCAG2" + activeConformanceLevels[activeConformanceLevels.length - 1] + "-Conformance";
 
@@ -102,6 +105,14 @@ export async function downloadLoadedReport(){
             });
         
         }
+
+        /* for (let i = 0; i < observationDataJson.length; i++) {
+            if (observationDataJson[i].assertion === criteria.test) {
+                criteria.result.description = observationDataJson[i].observation;
+                break;
+            }
+        } */
+
     });
 
     const enableBlacklist = await getFromChromeStorage('enableBlacklist');
