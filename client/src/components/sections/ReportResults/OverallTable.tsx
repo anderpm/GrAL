@@ -174,6 +174,10 @@ export default function OverallTable({conformanceLevels}:any): JSX.Element {
         });
     }, [conformanceLevels]);
 
+    useEffect(() => {
+        console.log(overallResultData)
+    }, [overallResultData]);
+
     /**
      * Renders the OverallTable component.
      * @returns {JSX.Element|null} - JSX element representing the OverallTable component.
@@ -360,6 +364,7 @@ function OutcomeElems({outcomeElems, mantainExtended, conformanceLevels, pageSum
             {selectedOutcomeElems[index] && ( 
                 <MoreInfo 
                     moreInfo={ocElems} 
+                    web={ocElems.webPage}
                 /> 
             )}
         </>))} 
@@ -373,9 +378,14 @@ function OutcomeElems({outcomeElems, mantainExtended, conformanceLevels, pageSum
  * @param {Array} props.moreInfo - The array of moreInfo.
  * @returns {JSX.Element} The JSX element representing the moreInfo component.
  */
-function MoreInfo({moreInfo}:any){
+function MoreInfo({moreInfo, web}:any){
 
     return(<> 
+        <tr>
+            <td style={{textAlign:"left", fontWeight:"bold", paddingTop:"10px", fontSize: "16px"}} colSpan={6}>
+                {web}
+            </td>      
+        </tr>
         {moreInfo.descriptions.map((desc:any, index:any) => (<>
             <tr>
                 <td style={{textAlign:"left", fontWeight:"bold", paddingTop:"10px"}} colSpan={6}>

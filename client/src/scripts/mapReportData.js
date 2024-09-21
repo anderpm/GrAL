@@ -140,7 +140,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                     "assertedBy": [],
                                     "criteria": "",
                                     "outcome": "",
-                                    "descriptions" : []
+                                    "descriptions" : [],
+                                    "webPage": ""
                                 }
                             ]
                         }
@@ -163,7 +164,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                     "assertedBy": [],
                                     "criteria": "",
                                     "outcome": "",
-                                    "descriptions" : []
+                                    "descriptions" : [],
+                                    "webPage": ""
                                 }
                             ]
                         }
@@ -186,7 +188,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                     "assertedBy": [],
                                     "criteria": "",
                                     "outcome": "",
-                                    "descriptions" : []
+                                    "descriptions" : [],
+                                    "webPage": ""
                                 }
                             ]
                         }
@@ -228,7 +231,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                         "assertedBy": pointer.assertedBy,
                                         "criteria": criterias.criteria,
                                         "outcome": part.outcome,
-                                        "descriptions" : part.descriptions
+                                        "descriptions" : part.descriptions,
+                                        "webPage": part.webPage
                                     })
                                 }else{
                                     jsonData[cL].elemsCL[elemIndex].elems.push({
@@ -240,7 +244,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                                 "assertedBy": pointer.assertedBy,
                                                 "criteria": criterias.criteria,
                                                 "outcome": part.outcome,
-                                                "descriptions" : part.descriptions
+                                                "descriptions" : part.descriptions,
+                                                "webPage": part.webPage
                                             }
                                         ]
                                     });
@@ -258,7 +263,8 @@ export async function mapReportData(evaluationreport = null, blackList = null){
                                                     "assertedBy": pointer.assertedBy,
                                                     "criteria": criterias.criteria,
                                                     "outcome": part.outcome,
-                                                    "descriptions" : part.descriptions
+                                                    "descriptions" : part.descriptions,
+                                                    "webPage": part.webPage
                                                 }
                                             ]
                                         }

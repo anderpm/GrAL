@@ -600,9 +600,14 @@ function CriteriaResults({criteria}:any){
                 </tr>
 
                 {selectedCriteriaResults[index] && (<>
-                
+                    <tr>
+                        <td style={{textAlign:"left", fontWeight:"bold", paddingTop:"10px", fontSize: "16px"}} colSpan={6}>
+                            {result.webPage}
+                        </td>      
+                    </tr>
                     {result.descriptions.map((element:any, i:any) => (<>
 
+                        
                         <tr>
                             <td style={{textAlign:"left", fontWeight:"bold", paddingTop:"10px"}} colSpan={6}>
                                 
