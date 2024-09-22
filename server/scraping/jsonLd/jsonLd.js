@@ -32,7 +32,7 @@ class JsonLd{
             "type": "Evaluation",
             "@language": "en",
             "title": "Accessibility Evaluation Report for " + webSite + " website",
-            "commissioner": "https://github.com/larraagirrejulen/GrAL/tree/main/ac_check%20(react)",
+            "commissioner": "https://github.com/anderpm/GrAL",
             "dct:date": new Date().toLocaleString(),
 
             "assertors": [{
