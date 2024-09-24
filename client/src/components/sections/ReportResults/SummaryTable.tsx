@@ -75,8 +75,9 @@ export default function SummaryTable({conformanceLevels}:any){
     return(
         <div id="evaluationSummary">
 
-            <p>Current Site/Page summary:</p>
-            <div className="tabs">
+            {/* <p>Current Site/Page summary:</p> */}
+            <p>Summary:</p>
+            {/* <div className="tabs">
                 <div
                     className={activeTab === 'website' ? 'active' : ''}
                     onClick={() => setActiveTab('website')}
@@ -93,7 +94,7 @@ export default function SummaryTable({conformanceLevels}:any){
                         webpage
                     : "Current webpage"}
                 </div>
-            </div>
+            </div> */}
 
             <div className="table">
                 {activeTab === 'website' && (<>
